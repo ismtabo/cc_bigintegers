@@ -12,4 +12,23 @@ package number;
  */
 public class BigInteger {
     
+    private boolean signum;
+    private int number[];
+    
+    
+    public BigInteger(String number){
+        this.number = stringToIntArray(number);
+    }
+    
+    
+    private int[] stringToIntArray(String number){
+        return null;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return null;
+    }
+    
 }

@@ -34,14 +34,14 @@ public class View extends javax.swing.JFrame {
         jTextFieldInput = new javax.swing.JTextField();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonMultiply = new javax.swing.JButton();
         jButtonAdd = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        jButtonReset = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        jButtonEqual = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,8 +52,13 @@ public class View extends javax.swing.JFrame {
         jButton1.setText("jButton1");
         jLayeredPane1.add(jButton1);
 
-        jButton2.setText("jButton2");
-        jLayeredPane1.add(jButton2);
+        jButtonMultiply.setText("X");
+        jButtonMultiply.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMultiplyActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(jButtonMultiply);
 
         jButtonAdd.setText("+");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -72,14 +77,24 @@ public class View extends javax.swing.JFrame {
         jButton4.setText("jButton4");
         jLayeredPane1.add(jButton4);
 
-        jButton9.setText("jButton9");
-        jLayeredPane1.add(jButton9);
+        jButtonReset.setText("C");
+        jButtonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonResetActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(jButtonReset);
 
         jButton6.setText("jButton6");
         jLayeredPane1.add(jButton6);
 
-        jButton8.setText("jButton8");
-        jLayeredPane1.add(jButton8);
+        jButtonEqual.setText("=");
+        jButtonEqual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEqualActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(jButtonEqual);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,16 +133,28 @@ public class View extends javax.swing.JFrame {
         controller.add();
     }//GEN-LAST:event_jButtonAddActionPerformed
 
+    private void jButtonEqualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEqualActionPerformed
+        controller.equal();
+    }//GEN-LAST:event_jButtonEqualActionPerformed
+
+    private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
+        controller.reset();
+    }//GEN-LAST:event_jButtonResetActionPerformed
+
+    private void jButtonMultiplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMultiplyActionPerformed
+        controller.multiply();
+    }//GEN-LAST:event_jButtonMultiplyActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonEqual;
+    private javax.swing.JButton jButtonMultiply;
+    private javax.swing.JButton jButtonReset;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JTextField jTextFieldInput;
     // End of variables declaration//GEN-END:variables

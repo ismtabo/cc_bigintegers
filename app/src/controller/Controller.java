@@ -25,8 +25,12 @@ public class Controller {
     private static final int POW = 6;
 
     private View view;
+    
     private BigInteger cacheNumber;
+    private BigInteger cacheNumberOp;
+
     private int lastOp;
+    
     
     public Controller(View view){
         this.view = view;
@@ -34,10 +38,13 @@ public class Controller {
     }
     
     
+    public void setCacheNumberOp(BigInteger number){
+        cacheNumberOp = number;
+    }
+    
     public void setCacheNumber(BigInteger number){
         cacheNumber = number;
     }
-    
     
     public void setOp(int op){
         lastOp = op;
@@ -48,20 +55,79 @@ public class Controller {
         return cacheNumber;
     }
     
+    public BigInteger getCacheNumberOp(){
+        return cacheNumberOp;
+    }
+    
+    public int getLastOp(){
+        return lastOp;
+    }
+    
+    
+    public void addOp(){
+        setCacheNumber(cacheNumber.add(getCacheNumberOp()));
+        System.out.println(cacheNumber);
+    }
+    
+    private void multiplyOp() {
+        setCacheNumber(cacheNumber.multiply(getCacheNumberOp()));
+        System.out.println(cacheNumber);
+    }
     
     public void add(){
         
-        BigInteger numA = new BigInteger(view.getJTextFieldInputText());
-        
+        setOp(ADD);
+        BigInteger bi = new BigInteger(view.getJTextFieldInputText());
+        if ((getCacheNumberOp() == null) || !getCacheNumberOp().equals(bi)){
+            setCacheNumberOp(bi);
+            update();
+        }
+
     }
     
+    public void multiply() {
+        setOp(MULTIPLY);
+
+        BigInteger bi = new BigInteger(view.getJTextFieldInputText());  
+        if ((getCacheNumberOp() == null) || !getCacheNumberOp().equals(bi)){
+            setCacheNumberOp(bi);
+            if (!getCacheNumber().equals(BigInteger.ZERO)){
+                update();
+            }
+        }
+
+        
+    }
     public void reset(){
-        setCacheNumber(BigInteger.ZERO);
         setOp(RESET);
+        setCacheNumber(BigInteger.ZERO);
+
         update();
     }
     
+   
     public void update(){
+        doLastOp();
         view.setJTextFieldInputText(getCacheNumber().toString());
+    }
+
+    private void doLastOp() {
+        switch(getLastOp()){
+            case ADD:
+                addOp();
+                break;
+                
+            case MULTIPLY:
+                multiplyOp();
+                break;
+        }
+    }
+
+    public void equal() {
+        BigInteger bi = new BigInteger(view.getJTextFieldInputText());
+        if ((getCacheNumber() == null) || getCacheNumber().equals(BigInteger.ZERO)){
+            setCacheNumber(bi);
+        }
+        update();
     }
 }

@@ -78,27 +78,40 @@ public class Controller {
         
         setOp(ADD);
         BigInteger bi = new BigInteger(view.getJTextFieldInputText());
+        
+        if (getCacheNumber().equals(BigInteger.ZERO)){
+            setCacheNumber(bi);
+        }
+        
         if ((getCacheNumberOp() == null) || !getCacheNumberOp().equals(bi)){
             setCacheNumberOp(bi);
+        }
+        
+        
+        
+        if(!getCacheNumberOp().equals(getCacheNumber())){
             update();
         }
-        update();
 
     }
     
     public void multiply() {
         setOp(MULTIPLY);
 
-        BigInteger bi = new BigInteger(view.getJTextFieldInputText());  
-        if ((getCacheNumberOp() == null) || !getCacheNumberOp().equals(bi)){
-            setCacheNumberOp(bi); 
-        }
+        BigInteger bi = new BigInteger(view.getJTextFieldInputText()); 
         
         if (getCacheNumber().equals(BigInteger.ZERO)){
             setCacheNumber(bi);
         }
-        update();
-
+        
+        if ((getCacheNumberOp() == null) || !getCacheNumberOp().equals(bi)){
+            setCacheNumberOp(bi);   
+        }
+        
+        if(!getCacheNumberOp().equals(getCacheNumber())){
+                update();
+        }
+        
         
     }
     public void reset(){

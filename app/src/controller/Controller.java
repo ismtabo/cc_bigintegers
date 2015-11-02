@@ -87,8 +87,6 @@ public class Controller {
             setCacheNumberOp(bi);
         }
         
-        
-        
         if(!getCacheNumberOp().equals(getCacheNumber())){
             update();
         }
@@ -145,5 +143,11 @@ public class Controller {
             setCacheNumber(bi);
         }
         update();
+    }
+
+    public void clean() {
+        if (view.getJTextFieldInputText().equals(getCacheNumber().toString())){
+            view.setJTextFieldInputText("");
+        }
     }
 }

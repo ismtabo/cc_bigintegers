@@ -46,6 +46,11 @@ public class View extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTextFieldInput.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldInputKeyTyped(evt);
+            }
+        });
 
         jLayeredPane1.setLayout(new java.awt.GridLayout(3, 3, 4, 4));
 
@@ -144,6 +149,10 @@ public class View extends javax.swing.JFrame {
     private void jButtonMultiplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMultiplyActionPerformed
         controller.multiply();
     }//GEN-LAST:event_jButtonMultiplyActionPerformed
+
+    private void jTextFieldInputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldInputKeyTyped
+        controller.clean();
+    }//GEN-LAST:event_jTextFieldInputKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

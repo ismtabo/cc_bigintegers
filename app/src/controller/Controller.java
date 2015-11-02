@@ -82,6 +82,7 @@ public class Controller {
             setCacheNumberOp(bi);
             update();
         }
+        update();
 
     }
     
@@ -90,11 +91,13 @@ public class Controller {
 
         BigInteger bi = new BigInteger(view.getJTextFieldInputText());  
         if ((getCacheNumberOp() == null) || !getCacheNumberOp().equals(bi)){
-            setCacheNumberOp(bi);
-            if (!getCacheNumber().equals(BigInteger.ZERO)){
-                update();
-            }
+            setCacheNumberOp(bi); 
         }
+        
+        if (getCacheNumber().equals(BigInteger.ZERO)){
+            setCacheNumber(bi);
+        }
+        update();
 
         
     }

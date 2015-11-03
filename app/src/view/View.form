@@ -57,7 +57,7 @@
     <Container class="javax.swing.JLayeredPane" name="jLayeredPane1">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-        <Property name="columns" type="int" value="3"/>
+        <Property name="columns" type="int" value="6"/>
         <Property name="horizontalGap" type="int" value="4"/>
         <Property name="rows" type="int" value="3"/>
         <Property name="verticalGap" type="int" value="4"/>
@@ -123,6 +123,22 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="jButton6"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonOpenBracket">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="("/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonOpenBracketActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonCloseBracket">
+          <Properties>
+            <Property name="text" type="java.lang.String" value=")"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCloseBracketActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonEqual">
           <Properties>

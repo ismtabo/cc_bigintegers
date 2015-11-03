@@ -41,6 +41,8 @@ public class View extends javax.swing.JFrame {
         jButtonSubtract = new javax.swing.JButton();
         jButtonReset = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButtonOpenBracket = new javax.swing.JButton();
+        jButtonCloseBracket = new javax.swing.JButton();
         jButtonEqual = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -52,7 +54,7 @@ public class View extends javax.swing.JFrame {
             }
         });
 
-        jLayeredPane1.setLayout(new java.awt.GridLayout(3, 3, 4, 4));
+        jLayeredPane1.setLayout(new java.awt.GridLayout(3, 6, 4, 4));
 
         jButtonPow.setText("^");
         jButtonPow.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +114,22 @@ public class View extends javax.swing.JFrame {
 
         jButton6.setText("jButton6");
         jLayeredPane1.add(jButton6);
+
+        jButtonOpenBracket.setText("(");
+        jButtonOpenBracket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOpenBracketActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(jButtonOpenBracket);
+
+        jButtonCloseBracket.setText(")");
+        jButtonCloseBracket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCloseBracketActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(jButtonCloseBracket);
 
         jButtonEqual.setText("=");
         jButtonEqual.addActionListener(new java.awt.event.ActionListener() {
@@ -196,13 +214,23 @@ public class View extends javax.swing.JFrame {
         controller.pow();
     }//GEN-LAST:event_jButtonPowActionPerformed
 
+    private void jButtonOpenBracketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOpenBracketActionPerformed
+        controller.openBracket();
+    }//GEN-LAST:event_jButtonOpenBracketActionPerformed
+
+    private void jButtonCloseBracketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseBracketActionPerformed
+        controller.closeBracket();
+    }//GEN-LAST:event_jButtonCloseBracketActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonCloseBracket;
     private javax.swing.JButton jButtonDivide;
     private javax.swing.JButton jButtonEqual;
     private javax.swing.JButton jButtonMod;
     private javax.swing.JButton jButtonMultiply;
+    private javax.swing.JButton jButtonOpenBracket;
     private javax.swing.JButton jButtonPow;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonSubtract;

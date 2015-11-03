@@ -22,6 +22,8 @@ public class Controller {
     private static final String DIVIDE = " / ";
     private static final String MOD = " % ";
     private static final String POW = " ^ ";
+    private static final String OPEN_BRACKET = " ( ";
+    private static final String CLOSE_BRACKET = " ) ";
 
     private View view;
     
@@ -99,5 +101,14 @@ public class Controller {
         if (view.getJTextFieldInputText().equals("0")){
             view.setJTextFieldInputText("");
         }
+    }
+
+    public void openBracket() {
+        view.appendJTextFieldInputText(OPEN_BRACKET);
+        closeBracket();
+    }
+
+    public void closeBracket() {
+        view.appendJTextFieldInputText(CLOSE_BRACKET);
     }
 }

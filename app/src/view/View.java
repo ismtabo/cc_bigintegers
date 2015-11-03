@@ -33,12 +33,12 @@ public class View extends javax.swing.JFrame {
 
         jTextFieldInput = new javax.swing.JTextField();
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jButton1 = new javax.swing.JButton();
+        jButtonPow = new javax.swing.JButton();
         jButtonMultiply = new javax.swing.JButton();
         jButtonAdd = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButtonMod = new javax.swing.JButton();
+        jButtonDivide = new javax.swing.JButton();
+        jButtonSubtract = new javax.swing.JButton();
         jButtonReset = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButtonEqual = new javax.swing.JButton();
@@ -54,8 +54,13 @@ public class View extends javax.swing.JFrame {
 
         jLayeredPane1.setLayout(new java.awt.GridLayout(3, 3, 4, 4));
 
-        jButton1.setText("jButton1");
-        jLayeredPane1.add(jButton1);
+        jButtonPow.setText("^");
+        jButtonPow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPowActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(jButtonPow);
 
         jButtonMultiply.setText("X");
         jButtonMultiply.addActionListener(new java.awt.event.ActionListener() {
@@ -73,14 +78,29 @@ public class View extends javax.swing.JFrame {
         });
         jLayeredPane1.add(jButtonAdd);
 
-        jButton3.setText("jButton3");
-        jLayeredPane1.add(jButton3);
+        jButtonMod.setText("%");
+        jButtonMod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(jButtonMod);
 
-        jButton7.setText("jButton7");
-        jLayeredPane1.add(jButton7);
+        jButtonDivide.setText("/");
+        jButtonDivide.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDivideActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(jButtonDivide);
 
-        jButton4.setText("jButton4");
-        jLayeredPane1.add(jButton4);
+        jButtonSubtract.setText("-");
+        jButtonSubtract.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSubtractActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(jButtonSubtract);
 
         jButtonReset.setText("C");
         jButtonReset.addActionListener(new java.awt.event.ActionListener() {
@@ -129,9 +149,15 @@ public class View extends javax.swing.JFrame {
         jTextFieldInput.setText(text);
     }
     
+    public void appendJTextFieldInputText(String text){
+        controller.clean();
+        jTextFieldInput.setText(getJTextFieldInputText() + text);
+    }
+    
     public String getJTextFieldInputText(){
         return jTextFieldInput.getText();
     }
+    
     
     
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
@@ -154,16 +180,32 @@ public class View extends javax.swing.JFrame {
         controller.clean();
     }//GEN-LAST:event_jTextFieldInputKeyTyped
 
+    private void jButtonSubtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubtractActionPerformed
+        controller.subtract();
+    }//GEN-LAST:event_jButtonSubtractActionPerformed
+
+    private void jButtonDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDivideActionPerformed
+        controller.divide();
+    }//GEN-LAST:event_jButtonDivideActionPerformed
+
+    private void jButtonModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModActionPerformed
+        controller.mod();
+    }//GEN-LAST:event_jButtonModActionPerformed
+
+    private void jButtonPowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPowActionPerformed
+        controller.pow();
+    }//GEN-LAST:event_jButtonPowActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonDivide;
     private javax.swing.JButton jButtonEqual;
+    private javax.swing.JButton jButtonMod;
     private javax.swing.JButton jButtonMultiply;
+    private javax.swing.JButton jButtonPow;
     private javax.swing.JButton jButtonReset;
+    private javax.swing.JButton jButtonSubtract;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JTextField jTextFieldInput;
     // End of variables declaration//GEN-END:variables

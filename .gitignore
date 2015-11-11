@@ -20,3 +20,6 @@ app/nbdist/
 app/nbactions.xml
 app/nb-configuration.xml
 app/.nb-gradle/
+
+### Intellij IDEA ###
+.idea

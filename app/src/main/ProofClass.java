@@ -10,7 +10,8 @@ import collection.tree.ExpresionTree;
 public class ProofClass {
 
     public static void main(String[] args) {
-        new ExpresionTree("12345+-45*453hola", ExpresionTree.POSTFIX);
+        ExpresionTree expresionTree = new ExpresionTree("12000 12345 2 + ^", ExpresionTree.POSTFIX);
+        System.out.println(expresionTree.operate());
         System.exit(0);
     }
 }

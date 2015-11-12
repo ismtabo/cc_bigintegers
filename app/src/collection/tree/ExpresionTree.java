@@ -1,8 +1,7 @@
 package collection.tree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.math.BigInteger;
+import java.util.*;
 
 /**
  *
@@ -14,7 +13,10 @@ public class ExpresionTree {
     public static final int INFIX = 0;
     public static final int POSTFIX = 1;
 
-    private NodeOp top;
+
+    private NodeExpression top;
+
+
 
     /**
      * Constructor of ExpressionTree.
@@ -29,64 +31,61 @@ public class ExpresionTree {
         this.top = generateTree(expression);
     }
 
-    /**
-     * generateTree funtion.
-     *
-     * Function to generate tree.
-     *
-     * @param expression String of expression.
-     * @return NodeOp top node of tree.
-     */
-    private NodeOp generateTree(String expression) {
-        List<Node> nodes = stringToNodes(expression);
 
-        /**
-         * TODO Implement method.
-         * Ya se ha extraido todos los nodos de la cadena de caracteres
-         * Ahora hay que colocar esa lista en forma de arbol.
-         */
-        return null;
-    }
 
     /**
-     * stringToNodes function.
+     * generateTree function.
      *
-     * It generate list of nodes from expression.
+     * It generates tree from expression.
      *
-     * @param expression String of expression.
+     * @param postFixExpression String of expression.
      * @return List of nodes.
      */
-    private List<Node> stringToNodes(String expression) {
-        int i = 0, temp, len = expression.length();
+    private NodeExpression generateTree(String postFixExpression) {
+        int i = 0, temp, len = postFixExpression.length();
 
-        List<Node> list = new ArrayList<>();
-        Node node;
+        final Stack<NodeExpression> nodeStack = new Stack<NodeExpression>();
+        Operation op;
+        NodeExpression nodeExpression1;
+        NodeExpression nodeExpression2;
         char c;
 
         while(i < len){
-            c = expression.charAt(i);
-            if((node = createNodeOp(c)) !=  null){
-                list.add(node);
+            c = postFixExpression.charAt(i);
+
+            if((op = Operation.isOP(c)) !=  null){
+                try{
+                    nodeExpression1 = nodeStack.pop();
+                    try {
+                        nodeExpression2 = nodeStack.pop();
+                    } catch (EmptyStackException e){
+                        nodeExpression2 = null;
+                    }
+                }catch (EmptyStackException e){
+                    nodeExpression1 = null;
+                    nodeExpression2 = null;
+                }
+
+                nodeStack.push(new NodeExpression(nodeExpression1, op, nodeExpression2));
                 i++;
-            } else if (isDigit(expression.charAt(i))) {
+            } else if (isDigit(postFixExpression.charAt(i))) {
                 temp = i + 1;
-                while ((temp < len) && isDigit(expression.charAt(temp))) {
+                while ((temp < len) && isDigit(postFixExpression.charAt(temp))) {
                     temp++;
                 }
-                node = new NodeNumber(expression.substring(i, temp));
-                list.add(node);
+
+                nodeStack.add(
+                        new NodeNumber(postFixExpression.substring(i, temp))
+                );
                 i = temp;
             } else {
                 i++;
             }
         }
-
-        for (int t = 0; t < list.size(); t++){
-            System.out.println(list.get(t));
-        }
-
-        return null;
+        return nodeStack.pop();
     }
+
+
 
     /**
      * isDigit function.
@@ -100,23 +99,6 @@ public class ExpresionTree {
         return value >= '0' && value <= '9';
     }
 
-
-    /**
-     * createNodeOp function.
-     *
-     * It creates NodeOp object if is possible,
-     * if not returns null.
-     *
-     * @param c char of operation.
-     * @return NodeOp
-     */
-    private NodeOp createNodeOp(char c) {
-        Operation op;
-        if ((op = Operation.isOP(c))!= null) {
-            return new NodeOp(op);
-        }
-        return null;
-    }
 
 
     /**
@@ -135,6 +117,50 @@ public class ExpresionTree {
 
 
     /**
+     * Returns the infix expression
+     *
+     * @return the string of infix.
+     */
+    public String infix() {
+        final StringBuilder infix = new StringBuilder();
+        inOrder(top, infix);
+        return infix.toString();
+    }
+
+
+    /**
+     * operate function.
+     *
+     * Do operations calling operate function on top node.
+     *
+     * @return ExpressionTree value.
+     */
+    public BigInteger operate(){
+        return top.operate();
+    }
+
+
+
+    /**
+     * inOrder method.
+     *
+     * Transforms ops to infix notation.
+     *
+     * @param node node to transform.
+     * @param infix StringBuilder where results is allocated.
+     */
+    private void inOrder(NodeExpression node, StringBuilder infix) {
+        if (node != null) {
+            inOrder(node.nodeLeft, infix);
+            infix.append(node);
+            infix.append(" ");
+            inOrder(node.nodeRight, infix);
+        }
+    }
+
+
+
+    /**
      *
      * ************************************************************************
      *                              Nodos
@@ -145,12 +171,7 @@ public class ExpresionTree {
 
 
     /**
-     *
-     * Interface that encapsulates Node implementations.
-     *
-     */
-    private interface Node{
-    }
+
 
 
 
@@ -159,24 +180,56 @@ public class ExpresionTree {
      * Class that represents operations in the tree.
      *
      */
-    private  class NodeOp implements Node{
-        private Operation op;
-        private Node nodeLeft;
-        private Node nodeRight;
+    private class NodeExpression {
 
-        public NodeOp(Operation op){
+
+
+        private Operation op;
+
+        private NodeExpression nodeLeft;
+        private NodeExpression nodeRight;
+
+
+
+        public NodeExpression(Operation op){
             this.op = op;
         }
 
-        public NodeOp(Operation op, Node nodeLeft, Node nodeRight){
+
+
+        public NodeExpression(NodeExpression nodeLeft, Operation op, NodeExpression nodeRight){
             this(op);
             this.nodeLeft = nodeLeft;
             this.nodeRight = nodeRight;
         }
 
+
+
         @Override
         public String toString() {
-            return op.name();
+            return op.toString();
+        }
+
+
+
+        public BigInteger operate(){
+            if(op == Operation.ADD){
+                return nodeLeft.operate().add(nodeRight.operate());
+            } if(op == Operation.SUBTRACT){
+                return nodeLeft.operate().subtract(nodeRight.operate());
+            } if(op == Operation.MULTIPLY){
+                return nodeLeft.operate().multiply(nodeRight.operate());
+            } if(op == Operation.DIVIDE){
+                return nodeLeft.operate().divide(nodeRight.operate());
+            } if(op == Operation.MODULE){
+                return nodeLeft.operate().mod(nodeRight.operate());
+            } if(op == Operation.POW){
+                /*
+                 * TODO find a better way to cast BigInteger to int.
+                 */
+                return nodeLeft.operate().pow(Integer.valueOf(nodeRight.operate().toString()));
+            }
+            return null;
         }
     }
 
@@ -185,20 +238,37 @@ public class ExpresionTree {
     /**
      * Class that represents numbers in the tree.
      */
-    private class NodeNumber implements Node{
-        private int value;
+    private class NodeNumber extends NodeExpression {
 
-        public NodeNumber(int value){
+
+
+        private BigInteger value;
+
+
+
+        public NodeNumber(BigInteger value){
+            super(null, null, null);
             this.value = value;
         }
-        
+
+
+
         public NodeNumber(String value){
-            this(Integer.valueOf(value));
+            this(new BigInteger(value));
         }
+
+
+
+        @Override
+        public BigInteger operate() {
+            return value;
+        }
+
+
 
         @Override
         public String toString() {
-            return value + "";
+            return value.toString();
         }
     }
 }

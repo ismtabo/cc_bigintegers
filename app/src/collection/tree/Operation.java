@@ -14,7 +14,10 @@ public enum Operation {
     POW('^'),
     RESULT('=');
 
+
     private final char symbol;
+
+
 
     /**
      * Constructor of Operation.
@@ -25,8 +28,22 @@ public enum Operation {
         this.symbol = symbol;
     }
 
+
+
     /**
-     * isOp funtion.
+     * toString function.
+     *
+     * @return op symbol.
+     */
+    @Override
+    public String toString() {
+        return String.valueOf(symbol);
+    }
+
+
+
+    /**
+     * isOp function.
      *
      * Static Mehod.
      *

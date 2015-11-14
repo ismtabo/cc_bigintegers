@@ -110,8 +110,7 @@ public class ExpresionTree {
      * @return Postfix expression
      */
     private String infixToPostFix(String expression) {
-        //TODO Implement method.
-        return null;
+        return new Infix2Postfix().InToPost(expression);
     }
 
 

@@ -59,11 +59,11 @@ public class ExpresionTree {
                     try {
                         nodeExpression2 = nodeStack.pop();
                     } catch (EmptyStackException e){
-                        nodeExpression2 = null;
+                        nodeExpression2 = new NodeNumber();
                     }
                 }catch (EmptyStackException e){
-                    nodeExpression1 = null;
-                    nodeExpression2 = null;
+                    nodeExpression1 = new NodeNumber();
+                    nodeExpression2 = new NodeNumber();
                 }
 
                 nodeStack.push(new NodeExpression(nodeExpression1, op, nodeExpression2));
@@ -128,6 +128,7 @@ public class ExpresionTree {
     }
 
 
+
     /**
      * operate function.
      *
@@ -151,10 +152,10 @@ public class ExpresionTree {
      */
     private void inOrder(NodeExpression node, StringBuilder infix) {
         if (node != null) {
-            inOrder(node.nodeLeft, infix);
+            inOrder(node.nodeRight, infix);
             infix.append(node);
             infix.append(" ");
-            inOrder(node.nodeRight, infix);
+            inOrder(node.nodeLeft, infix);
         }
     }
 
@@ -214,20 +215,20 @@ public class ExpresionTree {
 
         public BigInteger operate(){
             if(op == Operation.ADD){
-                return nodeLeft.operate().add(nodeRight.operate());
+                return nodeRight.operate().add(nodeLeft.operate());
             } if(op == Operation.SUBTRACT){
-                return nodeLeft.operate().subtract(nodeRight.operate());
+                return nodeRight.operate().subtract(nodeLeft.operate());
             } if(op == Operation.MULTIPLY){
-                return nodeLeft.operate().multiply(nodeRight.operate());
+                return nodeRight.operate().multiply(nodeLeft.operate());
             } if(op == Operation.DIVIDE){
-                return nodeLeft.operate().divide(nodeRight.operate());
+                return nodeRight.operate().divide(nodeLeft.operate());
             } if(op == Operation.MODULE){
-                return nodeLeft.operate().mod(nodeRight.operate());
+                return nodeRight.operate().mod(nodeLeft.operate());
             } if(op == Operation.POW){
                 /*
                  * TODO find a better way to cast BigInteger to int.
                  */
-                return nodeLeft.operate().pow(Integer.valueOf(nodeRight.operate().toString()));
+                return nodeRight.operate().pow(Integer.valueOf(nodeLeft.operate().toString()));
             }
             return null;
         }
@@ -244,7 +245,9 @@ public class ExpresionTree {
 
         private BigInteger value;
 
-
+        public NodeNumber(){
+            this(BigInteger.ZERO);
+        }
 
         public NodeNumber(BigInteger value){
             super(null, null, null);

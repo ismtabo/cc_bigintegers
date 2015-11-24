@@ -25,9 +25,6 @@ public class ExpresionTree {
      * @param format integer containing format of expression
      */
     public ExpresionTree(String expression, int format){
-        if(format == INFIX){
-            expression = infixToPostFix(expression);
-        }
         this.top = generateTree(expression);
     }
 
@@ -102,21 +99,6 @@ public class ExpresionTree {
 
 
     /**
-     * infixToPostFix function.
-     *
-     * It transforms Infix expression to Postfix expression.
-     *
-     * @param expression Infix expression
-     * @return Postfix expression
-     */
-    private String infixToPostFix(String expression) {
-        //TODO Implement method.
-        return null;
-    }
-
-
-
-    /**
      * Returns the infix expression
      *
      * @return the string of infix.
@@ -176,7 +158,7 @@ public class ExpresionTree {
 
 
 
-    /**
+     /**
      *
      * Class that represents operations in the tree.
      *

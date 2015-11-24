@@ -8,114 +8,47 @@ import java.util.*;
  * @author ismtabo
  * @author garciparedes
  */
-public class ExpresionTree {
+public abstract class ExpresionTree {
 
-
-    
-    public static final int INFIX = 0;
-    public static final int POSTFIX = 1;
 
 
     private NodeExpression top;
+    private HashMap<Character, ExpresionTree> varsMap;
+    private String expression;
 
 
 
     /**
+     *
      * Constructor of ExpressionTree.
      *
-     * @param expression String of expression.
-     * @param format integer containing format of expression
+     * @param varsMap
      */
-    public ExpresionTree(String expression, int format){
-        switch (format){
-            case INFIX:
-                this.top = generateFromInfix(expression);
-                break;
-            case POSTFIX:
-                this.top = generateFromPostfix(expression);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+    public ExpresionTree(String expression, HashMap<Character, ExpresionTree> varsMap){
+        this.expression = expression;
+        this.varsMap = varsMap;
+        this.top = generateFromExpression();
     }
 
 
 
     /**
-     * TODO
-     * @param expression
-     * @return
+     * generateFromExpression method.
+     * Abstract method.
+     *
+     * @return top node of ExpressionTree
      */
-    private NodeExpression generateFromInfix(String expression) {
-        return null;
-    }
+    protected abstract NodeExpression generateFromExpression();
 
 
 
     /**
-     * generateFromPostfix function.
+     * Getter of Expression
      *
-     * It generates tree from expression.
-     *
-     * @param postFixExpression String of expression.
-     * @return List of nodes.
+     * @return String expression
      */
-    private NodeExpression generateFromPostfix(String postFixExpression) {
-        int i = 0, temp, len = postFixExpression.length();
-
-        final Stack<NodeExpression> nodeStack = new Stack<NodeExpression>();
-        Operation op;
-        NodeExpression nodeExpression1;
-        NodeExpression nodeExpression2;
-        char c;
-
-        while(i < len){
-            c = postFixExpression.charAt(i);
-
-            if((op = Operation.isOP(c)) !=  null){
-                try{
-                    nodeExpression1 = nodeStack.pop();
-                    try {
-                        nodeExpression2 = nodeStack.pop();
-                    } catch (EmptyStackException e){
-                        nodeExpression2 = new NodeNumber();
-                    }
-                }catch (EmptyStackException e){
-                    nodeExpression1 = new NodeNumber();
-                    nodeExpression2 = new NodeNumber();
-                }
-
-                nodeStack.push(new NodeExpression(nodeExpression1, op, nodeExpression2));
-                i++;
-            } else if (isDigit(postFixExpression.charAt(i))) {
-                temp = i + 1;
-                while ((temp < len) && isDigit(postFixExpression.charAt(temp))) {
-                    temp++;
-                }
-
-                nodeStack.add(
-                        new NodeNumber(postFixExpression.substring(i, temp))
-                );
-                i = temp;
-            } else {
-                i++;
-            }
-        }
-        return nodeStack.pop();
-    }
-
-
-
-    /**
-     * isDigit function.
-     *
-     * It calculates if char is numeric digit.
-     *
-     * @param value char to check
-     * @return boolean containing if value is digit or not.
-     */
-    private boolean isDigit(char value) {
-        return value >= '0' && value <= '9';
+    public String getExpression() {
+        return expression;
     }
 
 
@@ -167,6 +100,16 @@ public class ExpresionTree {
 
     /**
      *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return infix();
+    }
+
+
+    /**
+     *
      * ************************************************************************
      *                              Nodos
      * ************************************************************************
@@ -175,17 +118,12 @@ public class ExpresionTree {
 
 
 
-    /**
-
-
-
-
      /**
      *
      * Class that represents operations in the tree.
      *
      */
-    private class NodeExpression {
+    protected class NodeExpression {
 
 
 
@@ -243,7 +181,7 @@ public class ExpresionTree {
     /**
      * Class that represents numbers in the tree.
      */
-    private class NodeNumber extends NodeExpression {
+    protected class NodeNumber extends NodeExpression {
 
 
 
@@ -280,6 +218,39 @@ public class ExpresionTree {
         @Override
         public String toString() {
             return value.toString();
+        }
+    }
+
+
+
+    /**
+     * Class that represents numbers in the tree.
+     */
+    protected class NodeVar extends NodeExpression {
+
+
+
+        Character varId;
+
+
+
+        public NodeVar(Character value){
+            super(null, null, null);
+            this.varId = value;
+        }
+
+
+
+        @Override
+        public BigInteger operate() {
+            return varsMap.get(varId).operate();
+        }
+
+
+
+        @Override
+        public String toString() {
+            return varsMap.get(varId).toString();
         }
     }
 }

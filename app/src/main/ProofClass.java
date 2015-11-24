@@ -10,6 +10,7 @@ import collection.tree.ExpresionTree;
 public class ProofClass {
 
     public static void main(String[] args) {
+        //Operacion: (34 + 25) * (3 - (2 ^234))
         ExpresionTree expresionTree = new ExpresionTree("34 25 + 3 2 234 ^ - *", ExpresionTree.POSTFIX);
         System.out.println(expresionTree.infix());
         System.out.println(expresionTree.operate());

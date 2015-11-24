@@ -10,6 +10,8 @@ import java.util.*;
  */
 public class ExpresionTree {
 
+
+    
     public static final int INFIX = 0;
     public static final int POSTFIX = 1;
 
@@ -25,20 +27,40 @@ public class ExpresionTree {
      * @param format integer containing format of expression
      */
     public ExpresionTree(String expression, int format){
-        this.top = generateTree(expression);
+        switch (format){
+            case INFIX:
+                this.top = generateFromInfix(expression);
+                break;
+            case POSTFIX:
+                this.top = generateFromPostfix(expression);
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 
 
 
     /**
-     * generateTree function.
+     * TODO
+     * @param expression
+     * @return
+     */
+    private NodeExpression generateFromInfix(String expression) {
+        return null;
+    }
+
+
+
+    /**
+     * generateFromPostfix function.
      *
      * It generates tree from expression.
      *
      * @param postFixExpression String of expression.
      * @return List of nodes.
      */
-    private NodeExpression generateTree(String postFixExpression) {
+    private NodeExpression generateFromPostfix(String postFixExpression) {
         int i = 0, temp, len = postFixExpression.length();
 
         final Stack<NodeExpression> nodeStack = new Stack<NodeExpression>();
@@ -227,9 +249,13 @@ public class ExpresionTree {
 
         private BigInteger value;
 
+
+
         public NodeNumber(){
             this(BigInteger.ZERO);
         }
+
+
 
         public NodeNumber(BigInteger value){
             super(null, null, null);

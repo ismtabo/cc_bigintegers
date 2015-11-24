@@ -243,14 +243,18 @@ public abstract class ExpresionTree {
 
         @Override
         public BigInteger operate() {
-            return varsMap.get(varId).operate();
+            return varsMap.get(
+                    Character.toUpperCase(varId)
+            ).operate();
         }
 
 
 
         @Override
         public String toString() {
-            return varsMap.get(varId).toString();
+            return varsMap.get(
+                    Character.toUpperCase(varId)
+            ).toString();
         }
     }
 }

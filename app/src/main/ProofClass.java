@@ -26,7 +26,7 @@ public class ProofClass {
         System.out.println(expresionTree.infix());
         System.out.println(expresionTree.operate());
 
-        String expresion2 = "A 34 25 + 3 2 234 ^ - * -";
+        String expresion2 = "a 34 25 + 3 2 234 ^ - * -";
         ExpresionTree expresionTree2 = new ExpressionPostFix(expresion2, vars);
 
         System.out.println(expresionTree2.infix());

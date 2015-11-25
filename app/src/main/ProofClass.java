@@ -14,24 +14,38 @@ public class ProofClass {
 
     public static void main(String[] args) {
         //Operacion: (34 + 25) * (3 - (2 ^234))
-        //ExpresionTree expresionTree = new ExpresionTree("34 25 + 3 2 234 ^ - *", ExpresionTree.POSTFIX);
-
-        HashMap<Character, ExpresionTree> vars = new HashMap<>();
-
         String expresion = "34 25 + 3 2 234 ^ - *";
-        char var = 'A';
-        ExpresionTree expresionTree = new ExpressionPostFix(expresion, vars);
-        vars.put(var, expresionTree);
+        ExpresionTree expresionTree = new ExpressionPostFix(expresion);
+        ExpresionTree.putVar("abeto", expresionTree);
 
         System.out.println(expresionTree.infix());
         System.out.println(expresionTree.operate());
 
-        String expresion2 = "a 34 25 + 3 2 234 ^ - * -";
-        ExpresionTree expresionTree2 = new ExpressionPostFix(expresion2, vars);
+
+
+        String expresion2 = "abeto 34 25 + 3 2 234 ^ - * -";
+        ExpresionTree expresionTree2 = new ExpressionPostFix(expresion2);
 
         System.out.println(expresionTree2.infix());
-        System.out.println(expresionTree2.operate());
 
+        try {
+            System.out.println(expresionTree2.operate());
+        }catch (IllegalStateException e){
+            System.out.println(e.getMessage());
+        }
+
+
+
+        String expresion3 = "casa";
+        ExpresionTree expresionTree3 = new ExpressionPostFix(expresion3);
+
+        System.out.println(expresionTree3.infix());
+
+        try {
+            System.out.println(expresionTree3.operate());
+        }catch (IllegalStateException e){
+            System.out.println(e.getMessage());
+        }
         System.exit(0);
     }
 }

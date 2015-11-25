@@ -12,8 +12,10 @@ public abstract class ExpresionTree {
 
 
 
+    private static HashMap<String, ExpresionTree> vars = new HashMap<>();
+
+
     private NodeExpression top;
-    private HashMap<Character, ExpresionTree> varsMap;
     private String expression;
 
 
@@ -22,12 +24,23 @@ public abstract class ExpresionTree {
      *
      * Constructor of ExpressionTree.
      *
-     * @param varsMap
+     * @param expression expression.
      */
-    public ExpresionTree(String expression, HashMap<Character, ExpresionTree> varsMap){
+    public ExpresionTree(String expression){
         this.expression = expression;
-        this.varsMap = varsMap;
         this.top = generateFromExpression();
+    }
+
+
+
+    public static void putVar(String varName, ExpresionTree expresion){
+        vars.put(varName.toUpperCase(), expresion);
+    }
+
+
+
+    public static ExpresionTree getVar(String varName){
+        return vars.get(varName);
     }
 
 
@@ -60,8 +73,13 @@ public abstract class ExpresionTree {
      */
     public String infix() {
         final StringBuilder infix = new StringBuilder();
-        inOrder(top, infix);
-        return infix.toString();
+        try {
+            inOrder(top, infix);
+            return infix.toString();
+
+        } catch (IllegalStateException e){
+            return e.getMessage();
+        }
     }
 
 
@@ -73,7 +91,7 @@ public abstract class ExpresionTree {
      *
      * @return ExpressionTree value.
      */
-    public BigInteger operate(){
+    public BigInteger operate() throws IllegalStateException{
         return top.operate();
     }
 
@@ -155,7 +173,7 @@ public abstract class ExpresionTree {
 
 
 
-        public BigInteger operate(){
+        public BigInteger operate() throws IllegalStateException {
             if(op == Operation.ADD){
                 return nodeRight.operate().add(nodeLeft.operate());
             } if(op == Operation.SUBTRACT){
@@ -230,31 +248,34 @@ public abstract class ExpresionTree {
 
 
 
-        Character varId;
+        String varName;
 
 
 
-        public NodeVar(Character value){
+        public NodeVar(String value){
             super(null, null, null);
-            this.varId = value;
+            this.varName = value.toUpperCase();
         }
 
 
 
         @Override
-        public BigInteger operate() {
-            return varsMap.get(
-                    Character.toUpperCase(varId)
-            ).operate();
+        public BigInteger operate() throws IllegalStateException{
+            if (getVar(varName) == null){
+                throw new IllegalStateException("Variable '" + varName + "' no definida");
+            }
+            return getVar(varName).operate();
         }
 
 
 
         @Override
         public String toString() {
-            return varsMap.get(
-                    Character.toUpperCase(varId)
-            ).toString();
+            if (getVar(varName)== null){
+                return varName;
+            }
+
+            return getVar(varName).toString();
         }
     }
 }

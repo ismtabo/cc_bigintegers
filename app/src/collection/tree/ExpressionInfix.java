@@ -13,10 +13,9 @@ public class ExpressionInfix extends ExpresionTree {
      * Constructor of ExpressionTree.
      *
      * @param expression
-     * @param varsMap
      */
-    public ExpressionInfix(String expression, HashMap<Character, ExpresionTree> varsMap) {
-        super(expression, varsMap);
+    public ExpressionInfix(String expression) {
+        super(expression);
     }
 
 

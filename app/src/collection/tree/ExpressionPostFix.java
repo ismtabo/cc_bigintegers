@@ -16,8 +16,8 @@ public class ExpressionPostFix  extends  ExpresionTree{
      *
      * @param expression String of expression.
      */
-    public ExpressionPostFix(String expression, HashMap<Character, ExpresionTree> varsMap) {
-        super(expression, varsMap);
+    public ExpressionPostFix(String expression) {
+        super(expression);
     }
 
 
@@ -58,6 +58,7 @@ public class ExpressionPostFix  extends  ExpresionTree{
 
                 nodeStack.push(new NodeExpression(nodeExpression1, op, nodeExpression2));
                 i++;
+
             } else if (Character.isDigit(getExpression().charAt(i))) {
                 temp = i + 1;
                 while ((temp < len) && Character.isDigit(getExpression().charAt(temp))) {
@@ -68,11 +69,17 @@ public class ExpressionPostFix  extends  ExpresionTree{
                         new NodeNumber(getExpression().substring(i, temp))
                 );
                 i = temp;
+
             } else if (Character.isLetter(getExpression().charAt(i))) {
+                temp = i + 1;
+                while ((temp < len) && Character.isLetter(getExpression().charAt(temp))) {
+                    temp++;
+                }
+
                 nodeStack.add(
-                        new NodeVar(Character.toUpperCase(getExpression().charAt(i)))
+                        new NodeVar(getExpression().substring(i, temp))
                 );
-                i ++;
+                i = temp;
             } else {
                 i++;
             }

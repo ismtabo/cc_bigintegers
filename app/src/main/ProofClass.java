@@ -18,7 +18,7 @@ public class ProofClass {
         ExpresionTree expresionTree = new ExpressionPostFix(expresion);
         ExpresionTree.putVar("abeto", expresionTree);
 
-        System.out.println(expresionTree.infix());
+        System.out.println(expresionTree);
         System.out.println(expresionTree.operate());
 
 
@@ -26,7 +26,7 @@ public class ProofClass {
         String expresion2 = "abeto 34 25 + 3 2 234 ^ - * -";
         ExpresionTree expresionTree2 = new ExpressionPostFix(expresion2);
 
-        System.out.println(expresionTree2.infix());
+        System.out.println(expresionTree2);
 
         try {
             System.out.println(expresionTree2.operate());
@@ -39,7 +39,7 @@ public class ProofClass {
         String expresion3 = "casa";
         ExpresionTree expresionTree3 = new ExpressionPostFix(expresion3);
 
-        System.out.println(expresionTree3.infix());
+        System.out.println(expresionTree3);
 
         try {
             System.out.println(expresionTree3.operate());

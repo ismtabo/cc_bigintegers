@@ -7,7 +7,7 @@ import java.util.Stack;
 /**
  * Created by garciparedes on 24/11/15.
  */
-public class ExpressionPostFix  extends  ExpresionTree{
+public class ExpressionPostFix  extends ExpresionTree{
 
 
 
@@ -85,5 +85,48 @@ public class ExpressionPostFix  extends  ExpresionTree{
             }
         }
         return nodeStack.pop();
+    }
+
+
+
+
+
+
+    /**
+     * inOrder method.
+     *
+     * Transforms ops to infix notation.
+     *
+     * @param node node to transform.
+     * @param infix StringBuilder where results is allocated.
+     */
+    private void inOrder(NodeExpression node, StringBuilder infix) {
+        if (node != null) {
+            inOrder(node.getNodeRight(), infix);
+            infix.append(node);
+            infix.append(" ");
+            inOrder(node.getNodeLeft(), infix);
+        }
+    }
+
+    /**
+     * Returns the infix expression
+     *
+     * @return the string of infix.
+     */
+    public String infix() {
+        final StringBuilder infix = new StringBuilder();
+        try {
+            inOrder(getTop(), infix);
+            return infix.toString();
+
+        } catch (IllegalStateException e){
+            return e.getMessage();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return infix();
     }
 }

@@ -58,29 +58,26 @@ public abstract class ExpresionTree {
     /**
      * Getter of Expression
      *
-     * @return String expression
+     * @return NodeExpression top
      */
-    public String getExpression() {
-        return expression;
+    protected NodeExpression getTop() {
+        return top;
     }
 
 
 
     /**
-     * Returns the infix expression
+     * Getter of Expression
      *
-     * @return the string of infix.
+     * @return String expression
      */
-    public String infix() {
-        final StringBuilder infix = new StringBuilder();
-        try {
-            inOrder(top, infix);
-            return infix.toString();
-
-        } catch (IllegalStateException e){
-            return e.getMessage();
-        }
+    protected String getExpression() {
+        return expression;
     }
+
+
+
+
 
 
 
@@ -98,31 +95,12 @@ public abstract class ExpresionTree {
 
 
     /**
-     * inOrder method.
-     *
-     * Transforms ops to infix notation.
-     *
-     * @param node node to transform.
-     * @param infix StringBuilder where results is allocated.
-     */
-    private void inOrder(NodeExpression node, StringBuilder infix) {
-        if (node != null) {
-            inOrder(node.nodeRight, infix);
-            infix.append(node);
-            infix.append(" ");
-            inOrder(node.nodeLeft, infix);
-        }
-    }
-
-
-
-    /**
      *
      * @return
      */
     @Override
     public String toString() {
-        return infix();
+        return getExpression();
     }
 
 
@@ -166,6 +144,15 @@ public abstract class ExpresionTree {
 
 
 
+
+        public NodeExpression getNodeLeft() {
+            return nodeLeft;
+        }
+
+        public NodeExpression getNodeRight() {
+            return nodeRight;
+        }
+
         @Override
         public String toString() {
             return op.toString();
@@ -175,24 +162,25 @@ public abstract class ExpresionTree {
 
         public BigInteger operate() throws IllegalStateException {
             if(op == Operation.ADD){
-                return nodeRight.operate().add(nodeLeft.operate());
+                return getNodeRight().operate().add(getNodeLeft().operate());
             } if(op == Operation.SUBTRACT){
-                return nodeRight.operate().subtract(nodeLeft.operate());
+                return getNodeRight().operate().subtract(getNodeLeft().operate());
             } if(op == Operation.MULTIPLY){
-                return nodeRight.operate().multiply(nodeLeft.operate());
+                return getNodeRight().operate().multiply(getNodeLeft().operate());
             } if(op == Operation.DIVIDE){
-                return nodeRight.operate().divide(nodeLeft.operate());
+                return getNodeRight().operate().divide(getNodeLeft().operate());
             } if(op == Operation.MODULE){
-                return nodeRight.operate().mod(nodeLeft.operate());
+                return getNodeRight().operate().mod(getNodeLeft().operate());
             } if(op == Operation.POW){
                 /*
                  * TODO find a better way to cast BigInteger to int.
                  */
-                return nodeRight.operate().pow(Integer.valueOf(nodeLeft.operate().toString()));
+                return getNodeRight().operate().pow(Integer.valueOf(getNodeLeft().operate().toString()));
             }
             return null;
         }
-    }
+
+     }
 
 
 

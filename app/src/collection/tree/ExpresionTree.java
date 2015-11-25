@@ -8,128 +8,76 @@ import java.util.*;
  * @author ismtabo
  * @author garciparedes
  */
-public class ExpresionTree {
+public abstract class ExpresionTree {
 
 
-    
-    public static final int INFIX = 0;
-    public static final int POSTFIX = 1;
+
+    private static HashMap<String, ExpresionTree> vars = new HashMap<>();
 
 
     private NodeExpression top;
+    private String expression;
 
 
 
     /**
+     *
      * Constructor of ExpressionTree.
      *
-     * @param expression String of expression.
-     * @param format integer containing format of expression
+     * @param expression expression.
      */
-    public ExpresionTree(String expression, int format){
-        switch (format){
-            case INFIX:
-                this.top = generateFromInfix(expression);
-                break;
-            case POSTFIX:
-                this.top = generateFromPostfix(expression);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+    public ExpresionTree(String expression){
+        this.expression = expression;
+        this.top = generateFromExpression();
+    }
+
+
+
+    public static void putVar(String varName, ExpresionTree expresion){
+        vars.put(varName.toUpperCase(), expresion);
+    }
+
+
+
+    public static ExpresionTree getVar(String varName){
+        return vars.get(varName);
     }
 
 
 
     /**
-     * TODO
-     * @param expression
-     * @return
+     * generateFromExpression method.
+     * Abstract method.
+     *
+     * @return top node of ExpressionTree
      */
-    private NodeExpression generateFromInfix(String expression) {
-        return null;
+    protected abstract NodeExpression generateFromExpression();
+
+
+
+    /**
+     * Getter of Expression
+     *
+     * @return NodeExpression top
+     */
+    protected NodeExpression getTop() {
+        return top;
     }
 
 
 
     /**
-     * generateFromPostfix function.
+     * Getter of Expression
      *
-     * It generates tree from expression.
-     *
-     * @param postFixExpression String of expression.
-     * @return List of nodes.
+     * @return String expression
      */
-    private NodeExpression generateFromPostfix(String postFixExpression) {
-        int i = 0, temp, len = postFixExpression.length();
-
-        final Stack<NodeExpression> nodeStack = new Stack<NodeExpression>();
-        Operation op;
-        NodeExpression nodeExpression1;
-        NodeExpression nodeExpression2;
-        char c;
-
-        while(i < len){
-            c = postFixExpression.charAt(i);
-
-            if((op = Operation.isOP(c)) !=  null){
-                try{
-                    nodeExpression1 = nodeStack.pop();
-                    try {
-                        nodeExpression2 = nodeStack.pop();
-                    } catch (EmptyStackException e){
-                        nodeExpression2 = new NodeNumber();
-                    }
-                }catch (EmptyStackException e){
-                    nodeExpression1 = new NodeNumber();
-                    nodeExpression2 = new NodeNumber();
-                }
-
-                nodeStack.push(new NodeExpression(nodeExpression1, op, nodeExpression2));
-                i++;
-            } else if (isDigit(postFixExpression.charAt(i))) {
-                temp = i + 1;
-                while ((temp < len) && isDigit(postFixExpression.charAt(temp))) {
-                    temp++;
-                }
-
-                nodeStack.add(
-                        new NodeNumber(postFixExpression.substring(i, temp))
-                );
-                i = temp;
-            } else {
-                i++;
-            }
-        }
-        return nodeStack.pop();
+    protected String getExpression() {
+        return expression;
     }
 
 
 
-    /**
-     * isDigit function.
-     *
-     * It calculates if char is numeric digit.
-     *
-     * @param value char to check
-     * @return boolean containing if value is digit or not.
-     */
-    private boolean isDigit(char value) {
-        return value >= '0' && value <= '9';
-    }
 
-
-
-    /**
-     * Returns the infix expression
-     *
-     * @return the string of infix.
-     */
-    public String infix() {
-        final StringBuilder infix = new StringBuilder();
-        inOrder(top, infix);
-        return infix.toString();
-    }
 
 
 
@@ -140,29 +88,20 @@ public class ExpresionTree {
      *
      * @return ExpressionTree value.
      */
-    public BigInteger operate(){
+    public BigInteger operate() throws IllegalStateException{
         return top.operate();
     }
 
 
 
     /**
-     * inOrder method.
      *
-     * Transforms ops to infix notation.
-     *
-     * @param node node to transform.
-     * @param infix StringBuilder where results is allocated.
+     * @return
      */
-    private void inOrder(NodeExpression node, StringBuilder infix) {
-        if (node != null) {
-            inOrder(node.nodeRight, infix);
-            infix.append(node);
-            infix.append(" ");
-            inOrder(node.nodeLeft, infix);
-        }
+    @Override
+    public String toString() {
+        return getExpression();
     }
-
 
 
     /**
@@ -175,17 +114,12 @@ public class ExpresionTree {
 
 
 
-    /**
-
-
-
-
      /**
      *
      * Class that represents operations in the tree.
      *
      */
-    private class NodeExpression {
+    protected class NodeExpression {
 
 
 
@@ -210,6 +144,15 @@ public class ExpresionTree {
 
 
 
+
+        public NodeExpression getNodeLeft() {
+            return nodeLeft;
+        }
+
+        public NodeExpression getNodeRight() {
+            return nodeRight;
+        }
+
         @Override
         public String toString() {
             return op.toString();
@@ -217,33 +160,34 @@ public class ExpresionTree {
 
 
 
-        public BigInteger operate(){
+        public BigInteger operate() throws IllegalStateException {
             if(op == Operation.ADD){
-                return nodeRight.operate().add(nodeLeft.operate());
+                return getNodeRight().operate().add(getNodeLeft().operate());
             } if(op == Operation.SUBTRACT){
-                return nodeRight.operate().subtract(nodeLeft.operate());
+                return getNodeRight().operate().subtract(getNodeLeft().operate());
             } if(op == Operation.MULTIPLY){
-                return nodeRight.operate().multiply(nodeLeft.operate());
+                return getNodeRight().operate().multiply(getNodeLeft().operate());
             } if(op == Operation.DIVIDE){
-                return nodeRight.operate().divide(nodeLeft.operate());
+                return getNodeRight().operate().divide(getNodeLeft().operate());
             } if(op == Operation.MODULE){
-                return nodeRight.operate().mod(nodeLeft.operate());
+                return getNodeRight().operate().mod(getNodeLeft().operate());
             } if(op == Operation.POW){
                 /*
                  * TODO find a better way to cast BigInteger to int.
                  */
-                return nodeRight.operate().pow(Integer.valueOf(nodeLeft.operate().toString()));
+                return getNodeRight().operate().pow(Integer.valueOf(getNodeLeft().operate().toString()));
             }
             return null;
         }
-    }
+
+     }
 
 
 
     /**
      * Class that represents numbers in the tree.
      */
-    private class NodeNumber extends NodeExpression {
+    protected class NodeNumber extends NodeExpression {
 
 
 
@@ -280,6 +224,46 @@ public class ExpresionTree {
         @Override
         public String toString() {
             return value.toString();
+        }
+    }
+
+
+
+    /**
+     * Class that represents numbers in the tree.
+     */
+    protected class NodeVar extends NodeExpression {
+
+
+
+        String varName;
+
+
+
+        public NodeVar(String value){
+            super(null, null, null);
+            this.varName = value.toUpperCase();
+        }
+
+
+
+        @Override
+        public BigInteger operate() throws IllegalStateException{
+            if (getVar(varName) == null){
+                throw new IllegalStateException("Variable '" + varName + "' no definida");
+            }
+            return getVar(varName).operate();
+        }
+
+
+
+        @Override
+        public String toString() {
+            if (getVar(varName)== null){
+                return varName;
+            }
+
+            return getVar(varName).toString();
         }
     }
 }

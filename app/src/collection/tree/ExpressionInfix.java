@@ -13,17 +13,17 @@ public class ExpressionInfix extends ExpresionTree {
 
     private static final String operators = "(?<op>[\\+\\-\\*\\/\\^\\%]{1})";
 
-    private static final String numberA = "(?<numA>\\d*)";
-    private static final String numberB = "(?<numB>\\d*)";
+    private static final String NUMBER_A = "(?<numA>\\d*)";
+    private static final String NUMBER_B = "(?<numB>\\d*)";
 
-    private static final String varA = "(?<varA>\\D*)";
-    private static final String varB = "(?<varB>\\D*)";
+    private static final String VAR_A = "(?<varA>\\D*)";
+    private static final String VAR_B = "(?<varB>\\D*)";
 
     private static final String BRACKETS_A = "(?<bracketsA>\\(.*\\))";
     private static final String BRACKETS_B = "(?<bracketsB>\\(.*\\))";
 
-    private static final String A = "(?<A>" + numberA + "|" + varA + "|" + BRACKETS_A + ")";
-    private static final String B = "(?<B>" + numberB + "|" + varB + "|" + BRACKETS_B + ")";
+    private static final String A = "(?<A>" + NUMBER_A + "|" + VAR_A + "|" + BRACKETS_A + ")";
+    private static final String B = "(?<B>" + NUMBER_B + "|" + VAR_B + "|" + BRACKETS_B + ")";
 
     private static final String otherLeft = "(?<otherLeft>[^\\d]*)";
     private static final String otherRight = "(?<otherRight>.*)";

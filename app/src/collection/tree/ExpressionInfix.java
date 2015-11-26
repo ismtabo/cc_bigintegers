@@ -22,8 +22,11 @@ public class ExpressionInfix extends ExpresionTree {
     private static final String BRACKETS_A = "(?<bracketsA>\\(.*\\))";
     private static final String BRACKETS_B = "(?<bracketsB>\\(.*\\))";
 
-    private static final String A = "(?<A>" + NUMBER_A + "|" + VAR_A + "|" + BRACKETS_A + ")";
-    private static final String B = "(?<B>" + NUMBER_B + "|" + VAR_B + "|" + BRACKETS_B + ")";
+    private static final String SIGN_A = "(?<signA>\\-?)";
+    private static final String SIGN_B = "(?<signB>\\-?)";
+
+    private static final String A = "(?<A>" + SIGN_A + "(" + NUMBER_A + "|" + VAR_A + "|" + BRACKETS_A + ")" + ")";
+    private static final String B = "(?<B>" + SIGN_B + "(" + NUMBER_B + "|" + VAR_B + "|" + BRACKETS_B + ")" + ")";
 
     private static final String otherLeft = "(?<otherLeft>[^\\d]*)";
     private static final String otherRight = "(?<otherRight>.*)";

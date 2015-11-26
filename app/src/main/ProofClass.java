@@ -54,7 +54,7 @@ public class ProofClass {
         String expressionC = "aed+45";
         String expressionD = "(aed*4)+45";
         String expressionE = "(aed*4)+(45^54-hola)";
-        String expressionF = "(aed*4)*(45^54-hola)*((85^7)*34542)+AED";
+        String expressionF = "((aed*4)*(45^54-hola)%(85^7))/34542+(AED*5)";
 
         ExpresionTree expresionTree = new ExpressionInfix(expressionF);
         System.exit(0);

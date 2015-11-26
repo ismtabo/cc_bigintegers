@@ -1,6 +1,7 @@
 package main;
 
 import collection.tree.ExpresionTree;
+import collection.tree.ExpressionInfix;
 import collection.tree.ExpressionPostFix;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ public class ProofClass {
 
     public static void main(String[] args) {
         //Operacion: (34 + 25) * (3 - (2 ^234))
+        /*
         String expresion = "34 25 + 3 2 234 ^ - *";
         ExpresionTree expresionTree = new ExpressionPostFix(expresion);
         ExpresionTree.putVar("abeto", expresionTree);
@@ -46,6 +48,15 @@ public class ProofClass {
         }catch (IllegalStateException e){
             System.out.println(e.getMessage());
         }
+        */
+        String expressionA = "3+34+234fsas342ffgs";
+        String expressionB = "34+45";
+        String expressionC = "aed+45";
+        String expressionD = "(aed*4)+45";
+        String expressionE = "(aed*4)+(45^54-hola)";
+        String expressionF = "(aed*4)+(45^54-hola)%(85^7)";
+
+        ExpresionTree expresionTree = new ExpressionInfix(expressionF);
         System.exit(0);
     }
 }

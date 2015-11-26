@@ -1,32 +1,33 @@
 package collection.tree;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by garciparedes on 24/11/15.
+ *
+ * @author ismtabo
+ * @author garciparedes
  */
 public class ExpressionInfix extends ExpresionTree {
 
 
-    private static final String asignOperator = "=";// Asing operator
+    private static final String operators = "(?<op>[\\+\\-\\*\\/\\^\\%]{1})";
 
-    private static final String sumOperator = "+\\-";// Main operators group by priority
-    private static final String mulOperator = "*/%";
-    private static final String powOperator = "^";
-    private static final List<String> operators = Arrays.asList(asignOperator, sumOperator, mulOperator, powOperator);
+    private static final String numberA = "(?<numA>\\d*)";
+    private static final String numberB = "(?<numB>\\d*)";
 
+    private static final String varA = "(?<varA>\\D*)";
+    private static final String varB = "(?<varB>\\D*)";
 
-    private static final String variable = "\(\w*\)|\w*";// Alphabetical value (inside parenthesis)
-    private static final String xVariable = "(?P<x>"+variable+")";
-    private static final String yVariable = "(?P<y>"+variable+")";
+    private static final String BRACKETS_A = "(?<bracketsA>\\(.*\\))";
+    private static final String BRACKETS_B = "(?<bracketsB>\\(.*\\))";
 
-    private Pattern rg;// Actual regexp pattern(can change by priority)
+    private static final String A = "(?<A>" + numberA + "|" + varA + "|" + BRACKETS_A + ")";
+    private static final String B = "(?<B>" + numberB + "|" + varB + "|" + BRACKETS_B + ")";
 
-    private Matcher matches;
+    private static final String otherLeft = "(?<otherLeft>[^\\d]*)";
+    private static final String otherRight = "(?<otherRight>.*)";
+
 
 
     /**
@@ -47,25 +48,28 @@ public class ExpressionInfix extends ExpresionTree {
     @Override
     protected NodeExpression generateFromExpression() {
 
-        String pattern = "";
-        for (operator: operators) {
-            pattern = xVariable+regexOp(operator)+yVariable;
-            rg.compile(pattern);
-            matches = rg.matcher(expr);
-            if(!matches.find()) // Expression match with actual operator
-                continue;
-            else{
-                // TODO: regexp recursivo a traves de la expresion
-                ;
-            }
-        }
+        String regex = (""
+                //+ otherLeft
+                + A
+                + operators
+                + B
+                //+ otherRight
+        );
 
+        System.out.println(getExpression());
+        System.out.println(regex);
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(getExpression());
+
+        System.out.println(matcher.matches());
+        //System.out.println(matcher.group("otherLeft"));
+        System.out.println(matcher.group("A"));
+        System.out.println(matcher.group("op"));
+        System.out.println(matcher.group("B"));
+        //System.out.println(matcher.group("otherRight"));
+
+        //TODO
         return null;
-    }
-
-
-    // Create Regexp String from decided operator
-    private String regexOp(String operator){
-        return "(?P<op>["+operator+"])";
     }
 }

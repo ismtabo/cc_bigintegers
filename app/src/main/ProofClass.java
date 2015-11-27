@@ -49,14 +49,25 @@ public class ProofClass {
             System.out.println(e.getMessage());
         }
         */
-        String expressionA = "3+34+234fsas342ffgs";
-        String expressionB = "34+45";
-        String expressionC = "aed+45";
-        String expressionD = "(aed*4)+45";
-        String expressionE = "(aed*4)+(45^54-hola)";
-        String expressionF = "((aed*4)*(45^54-hola)%(85^7))/34542+(AED*5)";
+        String expression [] = {
+                "3+34+234fsas342ffgs"
+                , "34+45"
+                , "aed+45"
+                , "(aed*4)+45"
+                , "(aed*4)+(45^54-hola)"
+                , "((aed*4)*(45^54-hola)%(85^7))/34542+(AED*5)"
+                , "(a+b)+(c*d)+((c+f)+453543*344)"
+                , "(34+25)-(3*(2^234))"
+                , "34 25 + 3 2 234 ^ * -"
 
-        ExpresionTree expresionTree = new ExpressionInfix(expressionF);
+        };
+
+        ExpressionInfix expresionTree = new ExpressionInfix(expression[7]);
+        System.out.println(expresionTree.operate());
+
+        ExpressionPostFix expresionTree2 = new ExpressionPostFix(expression[8]);
+        System.out.println(expresionTree2.infix());
+        System.out.println(expresionTree2.operate());
         System.exit(0);
     }
 }

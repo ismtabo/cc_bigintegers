@@ -50,30 +50,37 @@ public class ProofClass {
         }
         */
         String expression [] = {
-                 "3+34+234-34"
-                , "34+45"
+                 "3+34+234-34"                                          //0
+                , "34+45"                                               //1
                 , "aed+45"
                 , "(aed*4)+45"
                 , "(aed*4)+(45^54-hola)"
-                , "((aed*4)*(45^54-hola)%(85^7))/34542+(AED*5)"
+                , "((aed*4)*(45^54-hola)%(85^7))/34542+(AED*5)"         //5
                 , "(a+b)+(c*d)+((c+f)+453543*344)"
                 , "(34+25)-(3*(2^234))"
                 , "34 25 + 3 2 234 ^ * -"
                 , "3+34+234-34"
-                , "(3+34)+(234)-(34)"
+                , "(3+34)+(234)-(34)"                                   //10
+                , "(3+2)-(4+2)"
+                , "(3+(2-4)+2)"
+                , "1+(3+(2-4)+2)-1"
+                , "((3+2)-4+2)"
+                , "(3+2-(4+2))"                                         //15
 
         };
 
         //System.out.println(new ExpressionInfix(expression[9]).operate());
 
         //System.out.println(new ExpressionInfix(expression[10]).operate());
+        System.out.println(new ExpressionInfix(expression[11]).operate());
+        System.out.println(new ExpressionInfix(expression[12]).operate());
+        //System.out.println(new ExpressionInfix(expression[13]).operate());
+        //System.out.println(new ExpressionInfix(expression[14]).operate());
+        //System.out.println(new ExpressionInfix(expression[15]).operate());
 
-        System.out.println(new ExpressionInfix(expression[7]).operate());
+        //System.out.println(new ExpressionInfix(expression[7]).operate());
 
-        ExpressionPostFix expresionTree2 = new ExpressionPostFix(expression[8]);
-        //System.out.println(expresionTree2);
-        System.out.println(expresionTree2.operate());
-
+        //System.out.println(new ExpressionPostFix(expression[8]).operate());
         System.exit(0);
     }
 }

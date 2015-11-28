@@ -56,8 +56,8 @@ public class ExpressionInfix extends ExpresionTree {
     protected NodeExpression generateFromExpression() {
 
         System.out.println(getExpression());
-
         return reduce(getExpression());
+
     }
 
 
@@ -85,19 +85,11 @@ public class ExpressionInfix extends ExpresionTree {
         NodeExpression nodeRight = new NodeNumber();
 
         if(left.length() != 0) {
-            if (removeBrackets(left)) {
-                nodeLeft = reduce(left.substring(1, left.length() - 1));
-            } else {
-                nodeLeft = reduce(left);
-            }
+            nodeLeft = reduce(left);
         }
 
         if (right.length() != 0) {
-            if (removeBrackets(right)) {
-                nodeRight = reduce(right.substring(1, right.length() - 1));
-            } else {
-                nodeRight = reduce(right);
-            }
+            nodeRight = reduce(right);
         }
 
 
@@ -105,16 +97,24 @@ public class ExpressionInfix extends ExpresionTree {
     }
 
 
+
     public static boolean isNumeric(String str) {
         return str.matches(NUMBER);  //match a number with optional '-' and decimal.
     }
+
+
 
     public static boolean isVariable(String str) {
         return str.matches(VAR);  //match a number with optional '-' and decimal.
     }
 
 
+
     private static NodeExpression reduce(String expression){
+
+        if (!isBracketNeeded(expression)){
+            expression = expression.substring(1, expression.length() - 1);
+        }
 
         if (isNumeric(expression)) {
             return new NodeNumber(expression);
@@ -137,20 +137,22 @@ public class ExpressionInfix extends ExpresionTree {
         return null;
     }
 
-    public static boolean removeBrackets(String expression){
+
+
+    public static boolean isBracketNeeded(String expression){
 
         if (expression.indexOf('(',1) > expression.indexOf(')',1)){
-            return false;
+            return true;
         }
 
 
         if ((expression.length() != 0)
                 && (expression.charAt(0) == '(')
                 && (expression.charAt(expression.length()-1) ==')')){
-            return true;
+            return false;
         }
 
 
-        return false;
+        return true;
     }
 }

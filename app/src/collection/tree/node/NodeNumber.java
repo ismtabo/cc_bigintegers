@@ -1,4 +1,4 @@
-package collection.tree;
+package collection.tree.node;
 
 /**
  * Created by garciparedes on 27/11/15.

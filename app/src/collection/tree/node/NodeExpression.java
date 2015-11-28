@@ -1,8 +1,10 @@
-package collection.tree;
+package collection.tree.node;
 
 /**
  * Created by garciparedes on 27/11/15.
  */
+
+import collection.tree.Operation;
 
 import java.math.BigInteger;
 

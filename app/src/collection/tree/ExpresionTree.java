@@ -1,5 +1,7 @@
 package collection.tree;
 
+import collection.tree.node.NodeExpression;
+
 import java.math.BigInteger;
 import java.util.*;
 
@@ -40,7 +42,7 @@ public abstract class ExpresionTree {
 
 
     public static ExpresionTree getVar(String varName){
-        return vars.get(varName);
+        return vars.get(varName.toUpperCase());
     }
 
 

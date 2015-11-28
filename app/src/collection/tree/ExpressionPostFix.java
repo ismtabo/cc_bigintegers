@@ -1,7 +1,10 @@
 package collection.tree;
 
+import collection.tree.node.NodeExpression;
+import collection.tree.node.NodeNumber;
+import collection.tree.node.NodeVar;
+
 import java.util.EmptyStackException;
-import java.util.HashMap;
 import java.util.Stack;
 
 /**

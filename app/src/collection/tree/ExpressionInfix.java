@@ -1,7 +1,5 @@
 package collection.tree;
 
-import javax.swing.tree.TreeNode;
-import javax.xml.soap.Node;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,7 +62,7 @@ public class ExpressionInfix extends ExpresionTree {
 
 
 
-    private static NodeExpression pow(String op, String expression){
+    private static NodeExpression extract(String op, String expression){
         String regexSum = (""
                 + otherLeft
                 + op
@@ -83,19 +81,23 @@ public class ExpressionInfix extends ExpresionTree {
         System.out.println("grupo otherRight: " + right);
         System.out.println();
 
-        NodeExpression nodeLeft;
-        if ((left.length() != 0) && (left.charAt(0) == '(') && (left.charAt(left.length() - 1) == ')')) {
-            nodeLeft = reduce(left.substring(1, left.length() - 1));
-        } else {
-            nodeLeft = reduce(left);
+        NodeExpression nodeLeft = new NodeNumber();
+        NodeExpression nodeRight = new NodeNumber();
+
+        if(left.length() != 0) {
+            if (removeBrackets(left)) {
+                nodeLeft = reduce(left.substring(1, left.length() - 1));
+            } else {
+                nodeLeft = reduce(left);
+            }
         }
 
-        NodeExpression nodeRight;
-
-        if ((right.length() != 0) && (right.charAt(0) == '(') && (right.charAt(right.length()-1) ==')')){
-            nodeRight = reduce(right.substring(1, right.length()-1));
-        } else {
-            nodeRight = reduce(right);
+        if (right.length() != 0) {
+            if (removeBrackets(right)) {
+                nodeRight = reduce(right.substring(1, right.length() - 1));
+            } else {
+                nodeRight = reduce(right);
+            }
         }
 
 
@@ -121,17 +123,34 @@ public class ExpressionInfix extends ExpresionTree {
         } else{
 
             try {
-                return pow(ops1, expression);
-            } catch (IllegalStateException ignored) {
+                return extract(ops1, expression);
+            } catch (IllegalStateException e) {
                 try {
-                     return pow(ops2, expression);
-                } catch (IllegalStateException ignored1) {
+                     return extract(ops2, expression);
+                } catch (IllegalStateException e1) {
                     try {
-                        return pow(ops3, expression);
-                    } catch (IllegalStateException ignored2) {}
+                        return extract(ops3, expression);
+                    } catch (IllegalStateException ignored) {}
                 }
             }
         }
         return null;
+    }
+
+    public static boolean removeBrackets(String expression){
+
+        if (expression.indexOf('(',1) > expression.indexOf(')',1)){
+            return false;
+        }
+
+
+        if ((expression.length() != 0)
+                && (expression.charAt(0) == '(')
+                && (expression.charAt(expression.length()-1) ==')')){
+            return true;
+        }
+
+
+        return false;
     }
 }

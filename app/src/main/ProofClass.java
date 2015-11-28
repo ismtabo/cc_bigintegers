@@ -50,7 +50,7 @@ public class ProofClass {
         }
         */
         String expression [] = {
-                "3+34+234fsas342ffgs"
+                 "3+34+234-34"
                 , "34+45"
                 , "aed+45"
                 , "(aed*4)+45"
@@ -59,15 +59,21 @@ public class ProofClass {
                 , "(a+b)+(c*d)+((c+f)+453543*344)"
                 , "(34+25)-(3*(2^234))"
                 , "34 25 + 3 2 234 ^ * -"
+                , "3+34+234-34"
+                , "(3+34)+(234)-(34)"
 
         };
 
-        ExpressionInfix expresionTree = new ExpressionInfix(expression[7]);
-        System.out.println(expresionTree.operate());
+        //System.out.println(new ExpressionInfix(expression[9]).operate());
+
+        //System.out.println(new ExpressionInfix(expression[10]).operate());
+
+        System.out.println(new ExpressionInfix(expression[7]).operate());
 
         ExpressionPostFix expresionTree2 = new ExpressionPostFix(expression[8]);
-        System.out.println(expresionTree2.infix());
+        //System.out.println(expresionTree2);
         System.out.println(expresionTree2.operate());
+
         System.exit(0);
     }
 }

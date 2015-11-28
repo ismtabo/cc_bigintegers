@@ -32,7 +32,7 @@ public class ExpressionInfix extends ExpresionTree {
     //private static final String A = "(?<A>" + SIGN_A + "(" + NUMBER_A + "|" + VAR_A + "|" + BRACKETS_A + ")" + "{1})";
     //private static final String B = "(?<B>" + SIGN_B + "(" + NUMBER_B + "|" + VAR_B + "|" + BRACKETS_B + ")" + "{1})";
 
-    private static final String otherLeft = "(?<otherLeft>.*)";
+    private static final String otherLeft = "(?<otherLeft>([^\\(\\)]*)*(\\(.*\\))*([^\\(\\)]*))";
     private static final String otherRight = "(?<otherRight>([^\\(\\)]*)*(\\(.*\\))*([^\\(\\)]*))";
 
 

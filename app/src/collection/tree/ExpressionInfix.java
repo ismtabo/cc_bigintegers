@@ -15,16 +15,18 @@ import java.util.regex.Pattern;
 public class ExpressionInfix extends ExpresionTree {
 
 
-    private static final String ops1 = "(?<op>[\\+\\-\\%]{1})";
-    private static final String ops2 = "(?<op>[\\*\\/]{1})";
-    private static final String ops3 = "(?<op>[\\^]{1})";
+    private static final String ops1 = "(?<op>[\\%]{1})";
+
+    private static final String ops2 = "(?<op>[\\+\\-]{1})";
+    private static final String ops3 = "(?<op>[\\*\\/]{1})";
+    private static final String ops4 = "(?<op>[\\^]{1})";
 
     private static final String NUMBER = "(\\d*)";
 
     private static final String VAR = "(\\w*)";
 
-    private static final String LEFT = "(?<left>([^\\(\\)]*)*(\\(.*\\))*([^\\(\\)]*))";
-    private static final String RIGHT = "(?<right>([^\\(\\)]*)*(\\(.*\\))*([^\\(\\)]*))";
+    private static final String LEFT = "(?<left>([^\\(\\)]*)*?(\\(.*\\))*?([^\\(\\)]*?))";
+    private static final String RIGHT = "(?<right>([^\\(\\)]*)*?(\\(.*\\))*?([^\\(\\)]*?))";
 
 
 
@@ -76,19 +78,24 @@ public class ExpressionInfix extends ExpresionTree {
         } else{
             try {
                 return extract(ops1, expression);
-            } catch (IllegalStateException e) {
+            } catch (IllegalStateException e0) {
                 try {
                     return extract(ops2, expression);
-                } catch (IllegalStateException e1) {
+                } catch (IllegalStateException e) {
                     try {
                         return extract(ops3, expression);
-                    } catch (IllegalStateException e2) {
-                        return null;
+                    } catch (IllegalStateException e1) {
+                        try {
+                            return extract(ops4, expression);
+                        } catch (IllegalStateException e2) {
+                            return null;
+                        }
                     }
                 }
             }
         }
     }
+
 
 
     /**

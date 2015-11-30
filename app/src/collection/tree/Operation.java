@@ -74,7 +74,7 @@ public enum Operation {
         if (c == RESULT.symbol)
             return RESULT;
 
-        return null;
+        throw new IllegalArgumentException("Operación irreconocible");
     }
 
 }

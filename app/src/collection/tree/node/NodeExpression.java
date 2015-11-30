@@ -54,24 +54,29 @@ public class NodeExpression {
 
 
 
-    public BigInteger operate() throws IllegalStateException {
+    public BigInteger operate() {
         if(op == Operation.ADD){
             return getNodeRight().operate().add(getNodeLeft().operate());
+
         } if(op == Operation.SUBTRACT){
             return getNodeRight().operate().subtract(getNodeLeft().operate());
+
         } if(op == Operation.MULTIPLY){
             return getNodeRight().operate().multiply(getNodeLeft().operate());
+
         } if(op == Operation.DIVIDE){
             return getNodeRight().operate().divide(getNodeLeft().operate());
+
         } if(op == Operation.MODULE){
             return getNodeRight().operate().mod(getNodeLeft().operate());
+
         } if(op == Operation.POW){
                 /*
                  * TODO find a better way to cast BigInteger to int.
                  */
             return getNodeRight().operate().pow(Integer.valueOf(getNodeLeft().operate().toString()));
         }
-        return null;
+        throw new IllegalArgumentException("Operación irreconocible");
     }
 
 }

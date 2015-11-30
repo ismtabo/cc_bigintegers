@@ -37,7 +37,29 @@ public enum Operation {
      */
     @Override
     public String toString() {
-        return String.valueOf(symbol);
+        return String.valueOf(getSymbol());
+    }
+
+
+
+    /**
+     * Getter of Symbol.
+     *
+     * @return symbol char
+     */
+    public char getSymbol() {
+        return symbol;
+    }
+
+
+
+    /**
+     * Getter of Regex expression.
+     *
+     * @return symbol regex expression to find it char.
+     */
+    public String getRegex(){
+        return "\\" + getSymbol();
     }
 
 
@@ -53,25 +75,25 @@ public enum Operation {
      * @return Operation that represents the c.
      */
     public static Operation isOP(char c){
-        if (c == ADD.symbol)
+        if (c == ADD.getSymbol())
             return ADD;
 
-        if (c == SUBTRACT.symbol)
+        if (c == SUBTRACT.getSymbol())
             return SUBTRACT;
 
-        if (c == MULTIPLY.symbol)
+        if (c == MULTIPLY.getSymbol())
             return MULTIPLY;
 
-        if (c == DIVIDE.symbol)
+        if (c == DIVIDE.getSymbol())
             return DIVIDE;
 
-        if (c == MODULE.symbol)
+        if (c == MODULE.getSymbol())
             return MODULE;
 
-        if (c == POW.symbol)
+        if (c == POW.getSymbol())
             return POW;
 
-        if (c == RESULT.symbol)
+        if (c == RESULT.getSymbol())
             return RESULT;
 
         throw new IllegalArgumentException("Operación irreconocible");

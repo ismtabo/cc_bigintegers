@@ -15,11 +15,32 @@ import java.util.regex.Pattern;
 public class ExpressionInfix extends ExpresionTree {
 
 
-    private static final String ops1 = "(?<op>[\\%]{1})";
+    private static final String OP_START = "(?<op>[";
+    private static final String OP_END = "]{1})";
 
-    private static final String ops2 = "(?<op>[\\+\\-]{1})";
-    private static final String ops3 = "(?<op>[\\*\\/]{1})";
-    private static final String ops4 = "(?<op>[\\^]{1})";
+
+    private static final String OPS_1 = ""
+            + OP_START
+            + Operation.MODULE.getRegex()
+            + OP_END;
+
+    private static final String OPS_2 = ""
+            + OP_START
+            + Operation.ADD.getRegex()
+            + Operation.SUBTRACT.getRegex()
+            + OP_END;
+
+    private static final String OPS_3 = ""
+            + OP_START
+            + Operation.MULTIPLY.getRegex()
+            + Operation.DIVIDE.getRegex()
+            + OP_END;
+
+    private static final String OPS_4 = ""
+            + OP_START
+            + Operation.POW.getRegex()
+            + OP_END;
+
 
     private static final String NUMBER = "(\\d*)";
 
@@ -77,16 +98,16 @@ public class ExpressionInfix extends ExpresionTree {
             return new NodeVar(expression);
         } else{
             try {
-                return extract(ops1, expression);
+                return extract(OPS_1, expression);
             } catch (IllegalStateException e0) {
                 try {
-                    return extract(ops2, expression);
+                    return extract(OPS_2, expression);
                 } catch (IllegalStateException e) {
                     try {
-                        return extract(ops3, expression);
+                        return extract(OPS_3, expression);
                     } catch (IllegalStateException e1) {
                         try {
-                            return extract(ops4, expression);
+                            return extract(OPS_4, expression);
                         } catch (IllegalStateException e2) {
                             return null;
                         }

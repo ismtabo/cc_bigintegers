@@ -15,9 +15,9 @@ import java.util.regex.Pattern;
 public class ExpressionInfix extends ExpresionTree {
 
 
-    private static final String ops1 = "(?<op>[\\+\\-]{1})";
+    private static final String ops1 = "(?<op>[\\+\\-\\%]{1})";
     private static final String ops2 = "(?<op>[\\*\\/]{1})";
-    private static final String ops3 = "(?<op>[\\^\\%]{1})";
+    private static final String ops3 = "(?<op>[\\^]{1})";
 
     private static final String NUMBER = "(\\d*)";
 

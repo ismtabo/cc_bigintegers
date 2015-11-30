@@ -18,7 +18,7 @@ public class NodeExpression {
 
 
     private Operation op;
-
+    
     private NodeExpression nodeLeft;
     private NodeExpression nodeRight;
 
@@ -43,9 +43,25 @@ public class NodeExpression {
         return nodeLeft;
     }
 
+
+
     public NodeExpression getNodeRight() {
         return nodeRight;
     }
+
+
+
+    private BigInteger getOperatedNodeLeft(){
+        return getNodeLeft().operate();
+    }
+
+
+
+    private BigInteger getOperatedNodeRight(){
+        return getNodeRight().operate();
+    }
+
+
 
     @Override
     public String toString() {
@@ -56,25 +72,25 @@ public class NodeExpression {
 
     public BigInteger operate() {
         if(op == Operation.ADD){
-            return getNodeRight().operate().add(getNodeLeft().operate());
+            return getOperatedNodeRight().add(getOperatedNodeLeft());
 
         } if(op == Operation.SUBTRACT){
-            return getNodeRight().operate().subtract(getNodeLeft().operate());
+            return getOperatedNodeRight().subtract(getOperatedNodeLeft());
 
         } if(op == Operation.MULTIPLY){
-            return getNodeRight().operate().multiply(getNodeLeft().operate());
+            return getOperatedNodeRight().multiply(getOperatedNodeLeft());
 
         } if(op == Operation.DIVIDE){
-            return getNodeRight().operate().divide(getNodeLeft().operate());
+            return getOperatedNodeRight().divide(getOperatedNodeLeft());
 
         } if(op == Operation.MODULE){
-            return getNodeRight().operate().mod(getNodeLeft().operate());
+            return getOperatedNodeRight().mod(getOperatedNodeLeft());
 
         } if(op == Operation.POW){
                 /*
                  * TODO find a better way to cast BigInteger to int.
                  */
-            return getNodeRight().operate().pow(Integer.valueOf(getNodeLeft().operate().toString()));
+            return getOperatedNodeRight().pow(Integer.valueOf(getOperatedNodeLeft().toString()));
         }
         throw new IllegalArgumentException("Operación irreconocible");
     }

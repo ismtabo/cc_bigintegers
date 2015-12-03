@@ -4,7 +4,7 @@ package collection.tree.node;
  * Created by garciparedes on 27/11/15.
  */
 
-import collection.tree.ExpresionTree;
+import collection.tree.ExpressionTree;
 
 import java.math.BigInteger;
 
@@ -34,9 +34,9 @@ public class NodeVar extends NodeExpression {
         return getVar(varName).operate();
     }
 
-    private ExpresionTree getVar(String varName) {
+    private ExpressionTree getVar(String varName) {
 
-        return ExpresionTree.getVar(varName);
+        return ExpressionTree.getVar(varName);
     }
 
 

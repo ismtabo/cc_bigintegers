@@ -224,6 +224,8 @@ public class View extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * setJTextFieldInputText() function.
+     * 
      * Set new {@code text} at input text field.
      *
      * @param text
@@ -233,6 +235,8 @@ public class View extends javax.swing.JFrame {
     }
 
     /**
+     * appendJTextAreaRestult() function.
+     * 
      * Append new {@code text} in a new line at the text area of results.
      *
      * @param text
@@ -242,6 +246,8 @@ public class View extends javax.swing.JFrame {
     }
 
     /**
+     * appendJTextInputExpression() function.
+     * 
      * Append new {@code text} at the end of the input text field.
      *
      * @param text
@@ -251,6 +257,8 @@ public class View extends javax.swing.JFrame {
     }
 
     /**
+     * getJTextFieldInputText() function.
+     * 
      * @return Input text field content
      */
     public String getJTextFieldInputText() {

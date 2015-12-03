@@ -1,6 +1,6 @@
 package main;
 
-import collection.tree.ExpresionTree;
+import collection.tree.ExpressionTree;
 import collection.tree.ExpressionInfix;
 import collection.tree.ExpressionPostFix;
 
@@ -16,8 +16,8 @@ public class ProofClass {
     public static void main(String[] args) {
 
 
-        ExpresionTree.putVar("aed", new ExpressionInfix("(34+25)*(3-(2^234))^999"));
-        ExpresionTree.putVar("hola", new ExpressionInfix("aed*2"));
+        ExpressionTree.putVar("aed", new ExpressionInfix("(34+25)*(3-(2^234))^999"));
+        ExpressionTree.putVar("hola", new ExpressionInfix("aed*2"));
         //System.out.println(ExpressionInfix.getVar("hola").operate());
         String expression [] = {
                  "3+34+234-34"                                          //0

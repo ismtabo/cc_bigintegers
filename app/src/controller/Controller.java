@@ -5,6 +5,9 @@
  */
 package controller;
 
+import collection.tree.ExpressionInfix;
+import collection.tree.ExpressionTree;
+import collection.tree.node.NodeExpression;
 import java.math.BigInteger;
 import view.View;
 
@@ -13,7 +16,6 @@ import view.View;
  * @author garciparedes
  */
 public class Controller {
-
 
     private static final String EQUAL = "=";
     private static final String ADD = "+";
@@ -29,25 +31,20 @@ public class Controller {
 
     private BigInteger cacheNumber;
 
-
-    public Controller(View view){
+    public Controller(View view) {
         this.view = view;
         reset();
     }
 
-
-    public void setCacheNumber(BigInteger number){
+    public void setCacheNumber(BigInteger number) {
         cacheNumber = number;
     }
 
-
-
-    public BigInteger getCacheNumber(){
+    public BigInteger getCacheNumber() {
         return cacheNumber;
     }
 
-
-    public void addOp(){
+    public void addOp() {
         //setCacheNumber(cacheNumber.add(getCacheNumberOp()));
         System.out.println(cacheNumber);
     }
@@ -57,58 +54,59 @@ public class Controller {
         System.out.println(cacheNumber);
     }
 
-    public void add(){
-        view.appendJTextFieldInputText(ADD);
+    public void add() {
+        view.appendJTextAreaResult(ADD);
     }
 
-    public void subtract(){
-        view.appendJTextFieldInputText(SUBTRACT);
+    public void subtract() {
+        view.appendJTextAreaResult(SUBTRACT);
 
     }
 
     public void multiply() {
-        view.appendJTextFieldInputText(MULTIPLY);
+        view.appendJTextAreaResult(MULTIPLY);
     }
 
     public void divide() {
-        view.appendJTextFieldInputText(DIVIDE);
+        view.appendJTextAreaResult(DIVIDE);
     }
 
     public void mod() {
-        view.appendJTextFieldInputText(MOD);
+        view.appendJTextAreaResult(MOD);
     }
 
     public void pow() {
-        view.appendJTextFieldInputText(POW);
+        view.appendJTextAreaResult(POW);
     }
 
-    public void reset(){
+    public void reset() {
         setCacheNumber(BigInteger.ZERO);
         update();
     }
 
-
-    public void update(){
+    public void update() {
         view.setJTextFieldInputText(getCacheNumber().toString());
     }
 
-
-    public void equal() {
-
-    }
-
-    public void clean() {
-        if (view.getJTextFieldInputText().equals("0")){
-            view.setJTextFieldInputText("");
-        }
-    }
-
     public void openBracket() {
-        view.appendJTextFieldInputText(OPEN_BRACKET);
+        view.appendJTextAreaResult(OPEN_BRACKET);
         closeBracket();
     }
 
     public void closeBracket() {
-        view.appendJTextFieldInputText(CLOSE_BRACKET);
+        view.appendJTextAreaResult(CLOSE_BRACKET);
+    }
+
+    public void execute() {
+        String expression = view.getJTextFieldInputText();
+        view.appendJTextAreaResult(expression);
+        ExpressionTree expressiontree;
+        try {
+            expressiontree = new ExpressionInfix(expression);
+            cacheNumber = expressiontree.operate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 }

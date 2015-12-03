@@ -10,7 +10,7 @@ import java.util.Stack;
 /**
  * Created by garciparedes on 24/11/15.
  */
-public class ExpressionPostFix  extends ExpresionTree{
+public class ExpressionPostFix  extends ExpressionTree{
 
 
 

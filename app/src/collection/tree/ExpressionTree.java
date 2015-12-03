@@ -10,17 +10,12 @@ import java.util.*;
  * @author ismtabo
  * @author garciparedes
  */
-public abstract class ExpresionTree {
+public abstract class ExpressionTree {
 
-
-
-    private static HashMap<String, ExpresionTree> vars = new HashMap<>();
-
+    private static HashMap<String, ExpressionTree> vars = new HashMap<>();
 
     private NodeExpression top;
     private String expression;
-
-
 
     /**
      *
@@ -28,34 +23,25 @@ public abstract class ExpresionTree {
      *
      * @param expression expression.
      */
-    public ExpresionTree(String expression){
+    public ExpressionTree(String expression) {
         this.expression = expression;
         this.top = generateFromExpression();
     }
 
-
-
-    public static void putVar(String varName, ExpresionTree expresion){
+    public static void putVar(String varName, ExpressionTree expresion) {
         vars.put(varName.toUpperCase(), expresion);
     }
 
-
-
-    public static ExpresionTree getVar(String varName){
+    public static ExpressionTree getVar(String varName) {
         return vars.get(varName.toUpperCase());
     }
 
-
-
     /**
-     * generateFromExpression method.
-     * Abstract method.
+     * generateFromExpression method. Abstract method.
      *
      * @return top node of ExpressionTree
      */
     protected abstract NodeExpression generateFromExpression();
-
-
 
     /**
      * Getter of Expression
@@ -66,8 +52,6 @@ public abstract class ExpresionTree {
         return top;
     }
 
-
-
     /**
      * Getter of Expression
      *
@@ -77,12 +61,6 @@ public abstract class ExpresionTree {
         return expression;
     }
 
-
-
-
-
-
-
     /**
      * operate function.
      *
@@ -90,11 +68,9 @@ public abstract class ExpresionTree {
      *
      * @return ExpressionTree value.
      */
-    public BigInteger operate() throws IllegalStateException{
+    public BigInteger operate() throws IllegalStateException {
         return top.operate();
     }
-
-
 
     /**
      *
@@ -105,24 +81,11 @@ public abstract class ExpresionTree {
         return getExpression();
     }
 
-
     /**
      *
      * ************************************************************************
-     *                              Nodos
+     * Nodos
      * ************************************************************************
      *
      */
-
-
-
-
-
-
-
-
-
-
-
-
 }

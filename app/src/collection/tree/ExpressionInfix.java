@@ -12,12 +12,10 @@ import java.util.regex.Pattern;
  * @author ismtabo
  * @author garciparedes
  */
-public class ExpressionInfix extends ExpresionTree {
-
+public class ExpressionInfix extends ExpressionTree {
 
     private static final String OP_START = "(?<op>[";
     private static final String OP_END = "]{1})";
-
 
     private static final String OPS_1 = ""
             + OP_START
@@ -41,7 +39,6 @@ public class ExpressionInfix extends ExpresionTree {
             + Operation.POW.getRegex()
             + OP_END;
 
-
     private static final String NUMBER = "(\\d*)";
 
     private static final String VAR = "(\\w*)";
@@ -49,18 +46,14 @@ public class ExpressionInfix extends ExpresionTree {
     private static final String LEFT = "(?<left>([^\\(\\)]*)*?(\\(.*\\))*?([^\\(\\)]*?))";
     private static final String RIGHT = "(?<right>([^\\(\\)]*)*?(\\(.*\\))*?([^\\(\\)]*?))";
 
-
-
     /**
      * Constructor of ExpressionTree.
      *
      * @param expression
      */
     public ExpressionInfix(String expression) {
-        super(expression.replaceAll("\\s+",""));
+        super(expression.replaceAll("\\s+", ""));
     }
-
-
 
     /**
      * generateFromExpression() function.
@@ -74,29 +67,27 @@ public class ExpressionInfix extends ExpresionTree {
         return reduce(getExpression());
     }
 
-
     /**
      * reduce() function.
      *
-     * Recursive function that check if input expression
-     * is number or variable and if it isn't try to
-     * divide it in 'a operator b'.
+     * Recursive function that check if input expression is number or variable
+     * and if it isn't try to divide it in 'a operator b'.
      *
      * @param expression expression to check
      *
      * @return NodeExpression parent of subtree.
      */
-    private static NodeExpression reduce(String expression){
+    private static NodeExpression reduce(String expression) {
 
-        if (!isBracketNeeded(expression)){
+        if (!isBracketNeeded(expression)) {
             expression = expression.substring(1, expression.length() - 1);
         }
 
         if (isNumeric(expression)) {
             return new NodeNumber(expression);
-        } else if(isVariable(expression)) {
+        } else if (isVariable(expression)) {
             return new NodeVar(expression);
-        } else{
+        } else {
             try {
                 return extract(OPS_1, expression);
             } catch (IllegalStateException e0) {
@@ -117,26 +108,24 @@ public class ExpressionInfix extends ExpresionTree {
         }
     }
 
-
-
     /**
      * extract() function.
      *
-     * Recursive function that try to divide the input expression
-     * in 'a operator b'.
+     * Recursive function that try to divide the input expression in 'a operator
+     * b'.
      *
      * @param op operators to search.
      * @param expression expression to divide
      *
      * @exception IllegalStateException if operator is not found.
-
+     *
      * @return NodeExpression parent of subtree.
      */
-    private static NodeExpression extract(String op, String expression){
+    private static NodeExpression extract(String op, String expression) {
         NodeExpression nodeLeft;
         NodeExpression nodeRight;
 
-        String regex = (LEFT + op + RIGHT );
+        String regex = (LEFT + op + RIGHT);
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(expression);
@@ -163,10 +152,8 @@ public class ExpressionInfix extends ExpresionTree {
             nodeRight = new NodeNumber();
         }
 
-        return new NodeExpression(nodeRight, Operation.isOP(matcher.group("op").charAt(0)) ,nodeLeft);
+        return new NodeExpression(nodeRight, Operation.isOP(matcher.group("op").charAt(0)), nodeLeft);
     }
-
-
 
     /**
      * Function isNumeric.
@@ -180,8 +167,6 @@ public class ExpressionInfix extends ExpresionTree {
         return expression.matches(NUMBER);
     }
 
-
-
     /**
      * Function isVariable.
      *
@@ -194,8 +179,6 @@ public class ExpressionInfix extends ExpresionTree {
         return expression.matches(VAR);
     }
 
-
-
     /**
      * Function isBracketNeeded.
      *
@@ -204,15 +187,15 @@ public class ExpressionInfix extends ExpresionTree {
      * @param expression expression.
      * @return boolean value.
      */
-    private static boolean isBracketNeeded(String expression){
+    private static boolean isBracketNeeded(String expression) {
 
-        if (expression.indexOf('(',1) > expression.indexOf(')',1)){
+        if (expression.indexOf('(', 1) > expression.indexOf(')', 1)) {
             return true;
         }
 
         if ((expression.length() != 0)
                 && (expression.charAt(0) == '(')
-                && (expression.charAt(expression.length()-1) ==')')){
+                && (expression.charAt(expression.length() - 1) == ')')) {
             return false;
         }
 

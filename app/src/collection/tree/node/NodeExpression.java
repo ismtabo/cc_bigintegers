@@ -92,7 +92,7 @@ public class NodeExpression {
                  */
             return getOperatedNodeRight().pow(Integer.valueOf(getOperatedNodeLeft().toString()));
         }
-        throw new IllegalArgumentException("Operación irreconocible");
+        throw new IllegalArgumentException("Operación irreconocible:"+op);
     }
 
 }

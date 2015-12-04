@@ -12,7 +12,7 @@
 hs_err_pid*
 
 ### NetBeans ###
-app/nbproject/private/
+app/nbproject/
 app/build/
 app/nbbuild/
 app/dist/

@@ -7,19 +7,19 @@ package view;
 
 import collection.tree.Operation;
 import controller.Controller;
+
 import java.awt.Color;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 /**
- *
  * @author garciparedes
  */
 public class View extends javax.swing.JFrame {
 
     public final String INPREFIX = "IN: ";
     public final String OUTPREFIX = "OUT: ";
-    
+
     private Controller controller;
 
     /**
@@ -59,8 +59,8 @@ public class View extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         java.awt.GridBagLayout jLayeredPane1Layout = new java.awt.GridBagLayout();
-        jLayeredPane1Layout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
-        jLayeredPane1Layout.rowHeights = new int[] {0};
+        jLayeredPane1Layout.columnWidths = new int[]{0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        jLayeredPane1Layout.rowHeights = new int[]{0};
         jLayeredPane1.setLayout(jLayeredPane1Layout);
 
         jButtonPow.setText("^");
@@ -195,40 +195,40 @@ public class View extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonExecute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane1)
+                                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButtonExecute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonExecute))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButtonExecute))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonExecute, jTextFieldExpression});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[]{jButtonExecute, jTextFieldExpression});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
      * setJTextFieldInputText() function.
-     *
+     * <p/>
      * Set new {@code text} at input text field.
      *
      * @param text
@@ -239,10 +239,10 @@ public class View extends javax.swing.JFrame {
 
     /**
      * appendJTextAreaRestult() function.
-     *
+     * <p/>
      * Append new evaluation in a new line at the text area of results.
      *
-     * @param input - user expression input
+     * @param input  - user expression input
      * @param result - result of user expression
      */
     public void appendJTextAreaResult(String input, String result) {
@@ -251,7 +251,7 @@ public class View extends javax.swing.JFrame {
     }
 
     ;
-    
+
     /*
      * appendJTextAreaResult() function.
      * 
@@ -269,7 +269,7 @@ public class View extends javax.swing.JFrame {
 
     /**
      * appendJTextInputExpression() function.
-     *
+     * <p/>
      * Append new {@code text} at the end of the input text field.
      *
      * @param text
@@ -285,6 +285,26 @@ public class View extends javax.swing.JFrame {
      */
     public String getJTextFieldInputText() {
         return jTextFieldExpression.getText();
+    }
+
+    /**
+     * showError() function.
+     * <p/>
+     * View show {@error} at error's text field.
+     *
+     * @param error
+     */
+    public void showError(String error) {
+        // TODO: Mostrar error en la vista
+    }
+
+    /**
+     * clearErrors() function.
+     * <p/>
+     * View clear errors text fields.
+     */
+    public void clearErrors() {
+        // TODO: Limpiar errores de la vista
     }
 
     /*
@@ -361,6 +381,8 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextAreaResult;
     private javax.swing.JTextField jTextFieldExpression;
+
+
     // End of variables declaration//GEN-END:variables
 
 }

@@ -7,6 +7,9 @@ package view;
 
 import collection.tree.Operation;
 import controller.Controller;
+import java.awt.Color;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 /**
  *
@@ -14,6 +17,9 @@ import controller.Controller;
  */
 public class View extends javax.swing.JFrame {
 
+    public final String INPREFIX = "IN: ";
+    public final String OUTPREFIX = "OUT: ";
+    
     private Controller controller;
 
     /**
@@ -45,10 +51,10 @@ public class View extends javax.swing.JFrame {
         jButtonOpenBracket = new javax.swing.JButton();
         jButtonCloseBracket = new javax.swing.JButton();
         jButtonEqual = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaResult = new javax.swing.JTextArea();
         jTextFieldExpression = new javax.swing.JTextField();
         jButtonExecute = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextAreaResult = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -177,17 +183,14 @@ public class View extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jLayeredPane1.add(jButtonEqual, gridBagConstraints);
 
-        jTextAreaResult.setEditable(false);
-        jTextAreaResult.setColumns(20);
-        jTextAreaResult.setRows(5);
-        jScrollPane1.setViewportView(jTextAreaResult);
-
         jButtonExecute.setText("Execute");
         jButtonExecute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExecuteActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setViewportView(jTextAreaResult);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -196,10 +199,10 @@ public class View extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
                     .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonExecute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -207,8 +210,8 @@ public class View extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +228,7 @@ public class View extends javax.swing.JFrame {
 
     /**
      * setJTextFieldInputText() function.
-     * 
+     *
      * Set new {@code text} at input text field.
      *
      * @param text
@@ -236,18 +239,37 @@ public class View extends javax.swing.JFrame {
 
     /**
      * appendJTextAreaRestult() function.
-     * 
-     * Append new {@code text} in a new line at the text area of results.
      *
-     * @param text
+     * Append new evaluation in a new line at the text area of results.
+     *
+     * @param input - user expression input
+     * @param result - result of user expression
      */
-    public void appendJTextAreaResult(String text) {
-        jTextAreaResult.setText(getJTextAreaExpressionText()+"\n"+text);
+    public void appendJTextAreaResult(String input, String result) {
+        appendJTextAreaResult(INPREFIX + input, Color.blue);
+        appendJTextAreaResult(OUTPREFIX + result, Color.black);
+    }
+
+    ;
+    
+    /*
+     * appendJTextAreaResult() function.
+     * 
+     * Append text at text area of results, formated by Color c.
+     */
+    private void appendJTextAreaResult(String text, Color c) {
+        SimpleAttributeSet aset = new SimpleAttributeSet();
+        StyleConstants.setForeground(aset, c);
+
+        int len = jTextAreaResult.getText().length();
+        jTextAreaResult.setCaretPosition(len); // place caret at the end (with no selection)
+        jTextAreaResult.setCharacterAttributes(aset, false);
+        jTextAreaResult.replaceSelection(text + "\n"); // there is no 
     }
 
     /**
      * appendJTextInputExpression() function.
-     * 
+     *
      * Append new {@code text} at the end of the input text field.
      *
      * @param text
@@ -258,7 +280,7 @@ public class View extends javax.swing.JFrame {
 
     /**
      * getJTextFieldInputText() function.
-     * 
+     *
      * @return Input text field content
      */
     public String getJTextFieldInputText() {
@@ -320,7 +342,7 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCloseBracketActionPerformed
 
     private void jButtonExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExecuteActionPerformed
-        controller.execute();
+        controller.evaluate();
     }//GEN-LAST:event_jButtonExecuteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -337,7 +359,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSubtract;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextAreaResult;
+    private javax.swing.JTextPane jTextAreaResult;
     private javax.swing.JTextField jTextFieldExpression;
     // End of variables declaration//GEN-END:variables
 

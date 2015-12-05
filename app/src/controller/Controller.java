@@ -19,10 +19,13 @@ public class Controller {
 
     private View view;
 
+    private ExpressionController expressionController;
+
     private BigInteger cacheNumber;
 
     public Controller(View view) {
         this.view = view;
+        this.expressionController = new ExpressionController();
         reset();
     }
 
@@ -54,17 +57,18 @@ public class Controller {
     }
 
     public void evaluate() {
+        view.clearErrors();
         String expression = view.getJTextFieldInputText();
         String result = "--no result--";
         ExpressionTree expressiontree;
         try {
-            expressiontree = new ExpressionInfix(expression);
-            cacheNumber = expressiontree.operate();
+            expressionController.readExpression(expression);
+            cacheNumber = expressionController.result();
             result = cacheNumber.toString();
+            view.appendJTextAreaResult(expression, result);
         } catch (Exception e) {
+            view.showError("Operación no válida.");
             e.printStackTrace();
-        } finally {
-            view.appendJTextAreaResult(expression,result);
         }
         
     }

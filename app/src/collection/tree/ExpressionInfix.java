@@ -79,7 +79,7 @@ public class ExpressionInfix extends ExpressionTree {
      * @return NodeExpression that is the top of tree.
      */
     @Override
-    protected NodeExpression generateFromExpression() {
+    protected NodeExpression generateFromExpression() throws IllegalArgumentException  {
         if(getExpression().length() == 0) {
             throw new IllegalArgumentException(ERROR_EMPTY_EX);
         }
@@ -98,7 +98,7 @@ public class ExpressionInfix extends ExpressionTree {
      *
      * @return NodeExpression parent of subtree.
      */
-    private static NodeExpression reduce(String expression) {
+    private static NodeExpression reduce(String expression) throws IllegalArgumentException {
 
         if (!isBracketNeeded(expression)) {
             expression = expression.substring(1, expression.length() - 1);
@@ -111,16 +111,16 @@ public class ExpressionInfix extends ExpressionTree {
         } else {
             try {
                 return extract(OPS_1, expression);
-            } catch (IllegalStateException e0) {
+            } catch (Exception e0) {
                 try {
                     return extract(OPS_2, expression);
-                } catch (IllegalStateException e) {
+                } catch (Exception e1) {
                     try {
                         return extract(OPS_3, expression);
-                    } catch (IllegalStateException e1) {
+                    } catch (Exception e2) {
                         try {
                             return extract(OPS_4, expression);
-                        } catch (IllegalStateException e2) {
+                        } catch (Exception e3) {
                             throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_EX + expression);
                         }
                     }

@@ -28,9 +28,9 @@ public class NodeVar extends NodeExpression {
 
 
     @Override
-    public BigInteger operate() throws IllegalStateException{
+    public BigInteger operate() throws IllegalArgumentException {
         if (getVar(varName) == null){
-            throw new IllegalStateException(ERROR_UNDEFINED_VAR + varName);
+            throw new IllegalArgumentException (ERROR_UNDEFINED_VAR + varName);
         }
         return getVar(varName).operate();
     }

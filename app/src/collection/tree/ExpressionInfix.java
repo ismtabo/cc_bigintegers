@@ -79,11 +79,12 @@ public class ExpressionInfix extends ExpressionTree {
      * @return NodeExpression that is the top of tree.
      */
     @Override
-    protected NodeExpression generateFromExpression() {
+    protected NodeExpression generateFromExpression() throws IllegalArgumentException  {
         if(getExpression().length() == 0) {
             throw new IllegalArgumentException(ERROR_EMPTY_EX);
         }
         return reduce(getExpression());
+
     }
 
 
@@ -98,11 +99,7 @@ public class ExpressionInfix extends ExpressionTree {
      *
      * @return NodeExpression parent of subtree.
      */
-    private static NodeExpression reduce(String expression) {
-
-        if (!isBracketNeeded(expression)) {
-            expression = expression.substring(1, expression.length() - 1);
-        }
+    private static NodeExpression reduce(String expression) throws IllegalArgumentException {
 
         if (isNumeric(expression)) {
             return new NodeNumber(expression);
@@ -111,17 +108,22 @@ public class ExpressionInfix extends ExpressionTree {
         } else {
             try {
                 return extract(OPS_1, expression);
-            } catch (IllegalStateException e0) {
+            } catch (IllegalArgumentException e0) {
                 try {
                     return extract(OPS_2, expression);
-                } catch (IllegalStateException e) {
+                } catch (IllegalArgumentException e1) {
                     try {
                         return extract(OPS_3, expression);
-                    } catch (IllegalStateException e1) {
+                    } catch (IllegalArgumentException e2) {
                         try {
                             return extract(OPS_4, expression);
-                        } catch (IllegalStateException e2) {
-                            throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_EX + expression);
+                        } catch (IllegalArgumentException e3) {
+                            if(expression.charAt(0)== '('
+                                    && expression.charAt(expression.length()-1)== ')') {
+                                return reduce(expression.substring(1, expression.length() - 1));
+                            }else{
+                                throw new IllegalArgumentException(e3.getMessage());
+                            }
                         }
                     }
                 }
@@ -158,13 +160,28 @@ public class ExpressionInfix extends ExpressionTree {
             String left = matcher.group(LEFT_OPERAND);
             String right = matcher.group(RIGHT_OPERAND);
 
+
+            if ((countChar(left, '(')+countChar(left, ')'))%2 !=0){
+                throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_EX + expression);
+            }
+
             if (left.length() != 0) {
+
+                if (isCorrectOP(left.charAt(left.length()-1)+"")){
+                    throw new IllegalStateException(ERROR_UNRECOGNIZABLE_EX + expression);
+                }
+
                 nodeLeft = reduce(left);
             } else {
                 nodeLeft = new NodeNumber();
             }
 
             if (right.length() != 0) {
+
+                if(isCorrectOP(right.charAt(0)+"")) {
+                    throw new IllegalStateException(ERROR_UNRECOGNIZABLE_EX + expression);
+                }
+
                 nodeRight = reduce(right);
             } else {
                 nodeRight = new NodeNumber();
@@ -174,8 +191,23 @@ public class ExpressionInfix extends ExpressionTree {
             nodeLeft = new NodeNumber();
             nodeRight = new NodeNumber();
         }
+        try {
+            return new NodeExpression(nodeRight, Operation.isOP(matcher.group(OPERAND).charAt(0)+""), nodeLeft);
+        } catch (IllegalStateException e){
+            throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_EX + expression);
+        }
+    }
 
-        return new NodeExpression(nodeRight, Operation.isOP("" + matcher.group(OPERAND).charAt(0)), nodeLeft);
+
+
+    private static int countChar(String string, char c){
+        int counter = 0;
+        for( int i=0; i<string.length(); i++ ) {
+            if( string.charAt(i) == c ) {
+                counter++;
+            }
+        }
+        return counter;
     }
 
 
@@ -209,25 +241,16 @@ public class ExpressionInfix extends ExpressionTree {
 
 
     /**
-     * Function isBracketNeeded.
+     * Function isVariable.
      *
-     * It analizes if an expression contains unnecessary brackets.
+     * It analizes if an expression is a variable.
      *
-     * @param expression expression.
+     * @param value expression.
      * @return boolean value.
      */
-    private static boolean isBracketNeeded(String expression) {
-
-        if (expression.indexOf('(', 1) > expression.indexOf(')', 1)) {
-            return true;
-        }
-
-        if ((expression.length() != 0)
-                && (expression.charAt(0) == '(')
-                && (expression.charAt(expression.length() - 1) == ')')) {
-            return false;
-        }
-
-        return true;
+    private static boolean isCorrectOP(String value) {
+        return (value.matches(OPS_1)
+                || value.matches(OPS_3)
+                || value.matches(OPS_4));
     }
 }

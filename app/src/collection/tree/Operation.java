@@ -83,7 +83,7 @@ public enum Operation {
         }
         assert !regexp.equals("");
         return regexp;
-            
+
     }
 
     /**

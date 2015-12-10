@@ -45,7 +45,7 @@ public class ExpressionPostFix  extends ExpressionTree{
         while(i < len){
             c = getExpression().charAt(i);
 
-            if ((op = Operation.isOP("" + c)) != null) {
+            if((op = Operation.isOP(c+"")) !=  null){
                 try{
                     nodeExpression1 = nodeStack.pop();
                     try {

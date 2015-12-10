@@ -17,6 +17,9 @@ public class NodeExpression {
 
 
     private static final String ERROR_UNRECOGNIZABLE_OP = "Operación irreconocible: ";
+    private static final String ERROR_HIGH_EXPONENT = "Exponente demasiado grande: ";
+    private static final String ERROR_DIVIDE_BY_ZERO = "División entre 0: " ;
+    private static final String ERROR_NEGATIVE_EXPONENT = "Exponente negativo: ";
 
 
     private Operation op;
@@ -51,17 +54,19 @@ public class NodeExpression {
         return nodeRight;
     }
 
+
     public Operation getOp() {
         return op;
     }
 
-    private BigInteger getOperatedNodeLeft(){
+
+    private BigInteger getOperatedNodeLeft() throws IllegalArgumentException {
         return getNodeLeft().operate();
     }
 
 
 
-    private BigInteger getOperatedNodeRight(){
+    private BigInteger getOperatedNodeRight() throws IllegalArgumentException {
         return getNodeRight().operate();
     }
 
@@ -74,7 +79,7 @@ public class NodeExpression {
 
 
 
-    public BigInteger operate() {
+    public BigInteger operate() throws IllegalArgumentException {
         Operation op = getOp();
         if(op == Operation.ADD){
             return getOperatedNodeRight().add(getOperatedNodeLeft());
@@ -86,7 +91,12 @@ public class NodeExpression {
             return getOperatedNodeRight().multiply(getOperatedNodeLeft());
 
         } if(op == Operation.DIVIDE){
-            return getOperatedNodeRight().divide(getOperatedNodeLeft());
+
+            try {
+                return getOperatedNodeRight().divide(getOperatedNodeLeft());
+            } catch (ArithmeticException e){
+                throw new IllegalArgumentException(ERROR_DIVIDE_BY_ZERO + getOperatedNodeRight() +"/0");
+            }
 
         } if(op == Operation.MODULE){
             return getOperatedNodeRight().mod(getOperatedNodeLeft());
@@ -95,7 +105,14 @@ public class NodeExpression {
                 /*
                  * TODO find a better way to cast BigInteger to int.
                  */
-            return getOperatedNodeRight().pow(Integer.valueOf(getOperatedNodeLeft().toString()));
+            try {
+                return getOperatedNodeRight().pow(Integer.valueOf(getOperatedNodeLeft().toString()));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(ERROR_HIGH_EXPONENT + getOperatedNodeLeft().toString());
+            } catch (ArithmeticException e) {
+                throw new IllegalArgumentException(ERROR_NEGATIVE_EXPONENT +  getOperatedNodeLeft().toString());
+
+            }
         }
         throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_OP + this);
     }

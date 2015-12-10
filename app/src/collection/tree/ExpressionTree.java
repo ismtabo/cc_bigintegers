@@ -29,7 +29,7 @@ public abstract class ExpressionTree {
      *
      * @param expression expression.
      */
-    public ExpressionTree(String expression) {
+    public ExpressionTree(String expression) throws IllegalArgumentException {
         this.expression = expression;
         try {
             this.top = generateFromExpression();
@@ -93,11 +93,11 @@ public abstract class ExpressionTree {
      *
      * @return ExpressionTree value.
      */
-    public BigInteger operate() throws IllegalStateException {
+    public BigInteger operate() throws IllegalArgumentException {
         try {
             return top.operate();
-        } catch (IllegalStateException | ArithmeticException e){
-            throw new IllegalStateException(getExpression()
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException (getExpression()
                     + '\n'
                     + e.getMessage()
             );

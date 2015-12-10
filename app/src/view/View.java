@@ -9,6 +9,7 @@ import collection.tree.Operation;
 import controller.Controller;
 
 import java.awt.Color;
+import javax.swing.border.Border;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
@@ -19,6 +20,7 @@ public class View extends javax.swing.JFrame {
 
     public final String INPREFIX = "IN: ";
     public final String OUTPREFIX = "OUT: ";
+    private final int ENTER_KEY = 10;
 
     private Controller controller;
 
@@ -51,16 +53,21 @@ public class View extends javax.swing.JFrame {
         jButtonOpenBracket = new javax.swing.JButton();
         jButtonCloseBracket = new javax.swing.JButton();
         jButtonEqual = new javax.swing.JButton();
+        jButtonModPow = new javax.swing.JButton();
+        jButtonIsModPrime = new javax.swing.JButton();
+        jButtonNextProbablePrime = new javax.swing.JButton();
+        jButtonModInverse = new javax.swing.JButton();
         jTextFieldExpression = new javax.swing.JTextField();
         jButtonExecute = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaResult = new javax.swing.JTextPane();
+        jLabelError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         java.awt.GridBagLayout jLayeredPane1Layout = new java.awt.GridBagLayout();
-        jLayeredPane1Layout.columnWidths = new int[]{0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
-        jLayeredPane1Layout.rowHeights = new int[]{0};
+        jLayeredPane1Layout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        jLayeredPane1Layout.rowHeights = new int[] {0, 5, 0};
         jLayeredPane1.setLayout(jLayeredPane1Layout);
 
         jButtonPow.setText("^");
@@ -70,8 +77,8 @@ public class View extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jLayeredPane1.add(jButtonPow, gridBagConstraints);
 
@@ -106,8 +113,8 @@ public class View extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jLayeredPane1.add(jButtonMod, gridBagConstraints);
 
@@ -142,8 +149,8 @@ public class View extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 20;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jLayeredPane1.add(jButtonReset, gridBagConstraints);
 
@@ -154,8 +161,8 @@ public class View extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jLayeredPane1.add(jButtonOpenBracket, gridBagConstraints);
 
@@ -166,8 +173,8 @@ public class View extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jLayeredPane1.add(jButtonCloseBracket, gridBagConstraints);
 
@@ -178,10 +185,66 @@ public class View extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridx = 12;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jLayeredPane1.add(jButtonEqual, gridBagConstraints);
+
+        jButtonModPow.setText("modPow()");
+        jButtonModPow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModPowActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.3;
+        jLayeredPane1.add(jButtonModPow, gridBagConstraints);
+
+        jButtonIsModPrime.setText("ismodPrime()");
+        jButtonIsModPrime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonIsModPrimeActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.4;
+        jLayeredPane1.add(jButtonIsModPrime, gridBagConstraints);
+
+        jButtonNextProbablePrime.setText("nextProbablePrime()");
+        jButtonNextProbablePrime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNextProbablePrimeActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jLayeredPane1.add(jButtonNextProbablePrime, gridBagConstraints);
+
+        jButtonModInverse.setText("modInverse()");
+        jButtonModInverse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModInverseActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jLayeredPane1.add(jButtonModInverse, gridBagConstraints);
+
+        jTextFieldExpression.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldExpressionKeyPressed(evt);
+            }
+        });
 
         jButtonExecute.setText("Execute");
         jButtonExecute.addActionListener(new java.awt.event.ActionListener() {
@@ -192,36 +255,46 @@ public class View extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jTextAreaResult);
 
+        jLabelError.setForeground(new java.awt.Color(255, 0, 0));
+        jLabelError.setText("   ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1)
-                                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButtonExecute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addContainerGap())
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLayeredPane1)
+                        .addGap(1, 1, 1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonExecute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelError)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jButtonExecute))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonExecute)
+                    .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelError)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[]{jButtonExecute, jTextFieldExpression});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonExecute, jTextFieldExpression});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -242,7 +315,7 @@ public class View extends javax.swing.JFrame {
      * <p/>
      * Append new evaluation in a new line at the text area of results.
      *
-     * @param input  - user expression input
+     * @param input - user expression input
      * @param result - result of user expression
      */
     public void appendJTextAreaResult(String input, String result) {
@@ -250,7 +323,6 @@ public class View extends javax.swing.JFrame {
         appendJTextAreaResult(OUTPREFIX + result, Color.black);
     }
 
-    ;
 
     /*
      * appendJTextAreaResult() function.
@@ -290,12 +362,15 @@ public class View extends javax.swing.JFrame {
     /**
      * showError() function.
      * <p/>
-     * View show {@error} at error's text field.
+     * View show {
+     *
+     * @error} at error's text field.
      *
      * @param error
      */
     public void showError(String error) {
         // TODO: Mostrar error en la vista
+        jLabelError.setText(error);
     }
 
     /**
@@ -305,6 +380,7 @@ public class View extends javax.swing.JFrame {
      */
     public void clearErrors() {
         // TODO: Limpiar errores de la vista
+        jLabelError.setText("");
     }
 
     /*
@@ -365,24 +441,49 @@ public class View extends javax.swing.JFrame {
         controller.evaluate();
     }//GEN-LAST:event_jButtonExecuteActionPerformed
 
+    private void jTextFieldExpressionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldExpressionKeyPressed
+        if (evt.getKeyCode()== ENTER_KEY) {
+            controller.evaluate();
+        }
+    }//GEN-LAST:event_jTextFieldExpressionKeyPressed
+
+    private void jButtonModInverseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModInverseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonModInverseActionPerformed
+
+    private void jButtonIsModPrimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIsModPrimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonIsModPrimeActionPerformed
+
+    private void jButtonModPowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModPowActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonModPowActionPerformed
+
+    private void jButtonNextProbablePrimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextProbablePrimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonNextProbablePrimeActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCloseBracket;
     private javax.swing.JButton jButtonDivide;
     private javax.swing.JButton jButtonEqual;
     private javax.swing.JButton jButtonExecute;
+    private javax.swing.JButton jButtonIsModPrime;
     private javax.swing.JButton jButtonMod;
+    private javax.swing.JButton jButtonModInverse;
+    private javax.swing.JButton jButtonModPow;
     private javax.swing.JButton jButtonMultiply;
+    private javax.swing.JButton jButtonNextProbablePrime;
     private javax.swing.JButton jButtonOpenBracket;
     private javax.swing.JButton jButtonPow;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonSubtract;
+    private javax.swing.JLabel jLabelError;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextAreaResult;
     private javax.swing.JTextField jTextFieldExpression;
-
-
     // End of variables declaration//GEN-END:variables
 
 }

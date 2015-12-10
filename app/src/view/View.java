@@ -18,15 +18,18 @@ import javax.swing.text.StyleConstants;
  */
 public class View extends javax.swing.JFrame {
 
-    public final String INPREFIX = "IN: ";
-    public final String OUTPREFIX = "OUT: ";
-    private final String SPACE = " ";
-    private final int ENTER_KEY = 10;
+    public static final String INPREFIX = "IN: ";
+    public static final String OUTPREFIX = "OUT: ";
+    private static final String SPACE = " ";
+    
+    private static final int ENTER_KEY = 10;
+    private static final int UP_KEY = 38;
+    private static final int DOWN_KEY = 40;
 
-    public final String MODINVERSE = ".modInverse( )";
-    public final String MODPOW = ".modPow( , )";
-    public final String ISMODPRIME = ".ismodPrime( )";
-    public final String NEXTPROBABLEPRIME = ".nextProbablePrime()";
+    public static final String MODINVERSE = ".modInverse( )";
+    public static final String MODPOW = ".modPow( , )";
+    public static final String ISMODPRIME = ".ismodPrime( )";
+    public static final String NEXTPROBABLEPRIME = ".nextProbablePrime()";
 
     private Controller controller;
 
@@ -455,8 +458,16 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExecuteActionPerformed
 
     private void jTextFieldExpressionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldExpressionKeyPressed
-        if (evt.getKeyCode() == ENTER_KEY) {
-            controller.evaluate();
+        switch(evt.getKeyCode()){
+            case ENTER_KEY:
+                controller.evaluate();
+                break;
+            case UP_KEY:
+                controller.nextCache();
+                break;    
+            case DOWN_KEY:
+                controller.previousCache();
+                break;
         }
     }//GEN-LAST:event_jTextFieldExpressionKeyPressed
 

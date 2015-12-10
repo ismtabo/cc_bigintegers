@@ -9,6 +9,7 @@ import collection.tree.ExpressionInfix;
 import collection.tree.ExpressionTree;
 import collection.tree.Operation;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import view.View;
 
 /**
@@ -18,6 +19,9 @@ import view.View;
 public class Controller {
 
     private View view;
+    
+    private ArrayList<String> cache = new ArrayList<>();
+    private int indexCache = 0;
 
     private ExpressionController expressionController;
 
@@ -39,9 +43,31 @@ public class Controller {
             result = cachedresult.toString();
             view.appendJTextAreaResult(expression, result);
             view.setJTextFieldInputText("");
+            
+            cache.add(expression);
+            indexCache = cache.size();
+            
         } catch (Exception e) {
             view.showError(e.getMessage());
             e.printStackTrace();
         }
     }
+
+    
+    public void nextCache() {
+        if (indexCache > 0 ){
+            indexCache--;
+            view.setJTextFieldInputText(cache.get(indexCache));
+        }
+    }
+        
+    public void previousCache() {
+        if (indexCache+1 < cache.size()){
+            indexCache++;
+            view.setJTextFieldInputText(cache.get(indexCache));
+        }
+
+    }
+
+
 }

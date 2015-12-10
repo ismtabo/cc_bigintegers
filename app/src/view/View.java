@@ -20,7 +20,13 @@ public class View extends javax.swing.JFrame {
 
     public final String INPREFIX = "IN: ";
     public final String OUTPREFIX = "OUT: ";
+    private final String SPACE = " ";
     private final int ENTER_KEY = 10;
+
+    public final String MODINVERSE = ".modInverse( )";
+    public final String MODPOW = ".modPow( , )";
+    public final String ISMODPRIME = ".ismodPrime( )";
+    public final String NEXTPROBABLEPRIME = ".nextProbablePrime()";
 
     private Controller controller;
 
@@ -430,7 +436,7 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPowActionPerformed
 
     private void jButtonOpenBracketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOpenBracketActionPerformed
-        appendJTextInputExpression(Operation.LBRACKET.toString());
+        appendJTextInputExpression(Operation.LBRACKET.toString() + Operation.RBRACKET.toString());
     }//GEN-LAST:event_jButtonOpenBracketActionPerformed
 
     private void jButtonCloseBracketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseBracketActionPerformed
@@ -442,25 +448,29 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExecuteActionPerformed
 
     private void jTextFieldExpressionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldExpressionKeyPressed
-        if (evt.getKeyCode()== ENTER_KEY) {
+        if (evt.getKeyCode() == ENTER_KEY) {
             controller.evaluate();
         }
     }//GEN-LAST:event_jTextFieldExpressionKeyPressed
 
     private void jButtonModInverseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModInverseActionPerformed
         // TODO add your handling code here:
+        appendJTextInputExpression(MODINVERSE);
     }//GEN-LAST:event_jButtonModInverseActionPerformed
 
     private void jButtonIsModPrimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIsModPrimeActionPerformed
         // TODO add your handling code here:
+        appendJTextInputExpression(MODPOW);
     }//GEN-LAST:event_jButtonIsModPrimeActionPerformed
 
     private void jButtonModPowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModPowActionPerformed
         // TODO add your handling code here:
+        appendJTextInputExpression(ISMODPRIME);
     }//GEN-LAST:event_jButtonModPowActionPerformed
 
     private void jButtonNextProbablePrimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextProbablePrimeActionPerformed
         // TODO add your handling code here:
+        appendJTextInputExpression(NEXTPROBABLEPRIME);
     }//GEN-LAST:event_jButtonNextProbablePrimeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

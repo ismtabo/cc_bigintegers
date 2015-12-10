@@ -38,6 +38,7 @@ public class Controller {
             cachedresult = expressionController.result();
             result = cachedresult.toString();
             view.appendJTextAreaResult(expression, result);
+            view.setJTextFieldInputText("");
         } catch (Exception e) {
             view.showError(e.getMessage());
             e.printStackTrace();

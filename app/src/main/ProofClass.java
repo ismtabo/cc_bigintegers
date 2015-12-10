@@ -37,6 +37,12 @@ public class ProofClass {
                 //, "((3+2)-4+2)"
                 //, "(3+2-(4+2))"                                         //15
                 , "(34 + 25) * (3 - (2 ^234)) % 2^32 - 3 % 55"
+                , "74+3213-(434-4&)"
+                , ")("
+                , "gfssdgdsgsd"
+                , "gsfsd-(434-4&)"
+                , "434/0"
+                , "2433^-331"
                 //, "-(34234532523-(3*3)/(4*2))"
 
         };
@@ -45,7 +51,12 @@ public class ProofClass {
 
         for (String anExpression : expression) {
             System.out.println(anExpression);
-            System.out.println(new ExpressionInfix(anExpression).operate());
+            try {
+                System.out.println(new ExpressionInfix(anExpression).operate());
+            } catch (IllegalArgumentException | IllegalStateException e){
+                System.out.println(e.getMessage());
+            }
+            System.out.println();
         }
         System.exit(0);
     }

@@ -25,7 +25,6 @@ public class ExpressionPostFix  extends ExpressionTree{
 
 
 
-
     /**
      * generateFromPostfix function.
      *
@@ -93,8 +92,6 @@ public class ExpressionPostFix  extends ExpressionTree{
 
 
 
-
-
     /**
      * inOrder method.
      *
@@ -112,6 +109,8 @@ public class ExpressionPostFix  extends ExpressionTree{
         }
     }
 
+
+
     /**
      * Returns the infix expression
      *
@@ -127,6 +126,8 @@ public class ExpressionPostFix  extends ExpressionTree{
             return e.getMessage();
         }
     }
+
+
 
     @Override
     public String toString() {

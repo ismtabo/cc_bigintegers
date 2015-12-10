@@ -12,10 +12,16 @@ import java.util.*;
  */
 public abstract class ExpressionTree {
 
+
+
     private static HashMap<String, ExpressionTree> vars = new HashMap<>();
+
+
 
     private NodeExpression top;
     private String expression;
+
+
 
     /**
      *
@@ -25,16 +31,29 @@ public abstract class ExpressionTree {
      */
     public ExpressionTree(String expression) {
         this.expression = expression;
-        this.top = generateFromExpression();
+        try {
+            this.top = generateFromExpression();
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(expression
+                    + "\n"
+                    + e.getMessage()
+            );
+        }
     }
+
+
 
     public static void putVar(String varName, ExpressionTree expresion) {
         vars.put(varName.toUpperCase(), expresion);
     }
 
+
+
     public static ExpressionTree getVar(String varName) {
         return vars.get(varName.toUpperCase());
     }
+
+
 
     /**
      * generateFromExpression method. Abstract method.
@@ -42,6 +61,8 @@ public abstract class ExpressionTree {
      * @return top node of ExpressionTree
      */
     protected abstract NodeExpression generateFromExpression();
+
+
 
     /**
      * Getter of Expression
@@ -52,6 +73,8 @@ public abstract class ExpressionTree {
         return top;
     }
 
+
+
     /**
      * Getter of Expression
      *
@@ -61,6 +84,8 @@ public abstract class ExpressionTree {
         return expression;
     }
 
+
+
     /**
      * operate function.
      *
@@ -69,8 +94,17 @@ public abstract class ExpressionTree {
      * @return ExpressionTree value.
      */
     public BigInteger operate() throws IllegalStateException {
-        return top.operate();
+        try {
+            return top.operate();
+        } catch (IllegalStateException | ArithmeticException e){
+            throw new IllegalStateException(getExpression()
+                    + '\n'
+                    + e.getMessage()
+            );
+        }
     }
+
+
 
     /**
      *
@@ -80,12 +114,4 @@ public abstract class ExpressionTree {
     public String toString() {
         return getExpression();
     }
-
-    /**
-     *
-     * ************************************************************************
-     * Nodos
-     * ************************************************************************
-     *
-     */
 }

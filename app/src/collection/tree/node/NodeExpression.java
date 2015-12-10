@@ -16,6 +16,8 @@ import java.math.BigInteger;
 public class NodeExpression {
 
 
+    private static final String ERROR_UNRECOGNIZABLE_OP = "Operación irreconocible: ";
+
 
     private Operation op;
     
@@ -49,7 +51,9 @@ public class NodeExpression {
         return nodeRight;
     }
 
-
+    public Operation getOp() {
+        return op;
+    }
 
     private BigInteger getOperatedNodeLeft(){
         return getNodeLeft().operate();
@@ -71,6 +75,7 @@ public class NodeExpression {
 
 
     public BigInteger operate() {
+        Operation op = getOp();
         if(op == Operation.ADD){
             return getOperatedNodeRight().add(getOperatedNodeLeft());
 
@@ -92,7 +97,7 @@ public class NodeExpression {
                  */
             return getOperatedNodeRight().pow(Integer.valueOf(getOperatedNodeLeft().toString()));
         }
-        throw new IllegalArgumentException("Operación irreconocible:"+op);
+        throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_OP + this);
     }
 
 }

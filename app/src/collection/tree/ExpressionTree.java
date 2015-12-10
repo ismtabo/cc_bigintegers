@@ -96,7 +96,7 @@ public abstract class ExpressionTree {
     public BigInteger operate() throws IllegalArgumentException {
         try {
             return top.operate();
-        } catch (Exception e){
+        } catch (IllegalArgumentException e){
             throw new IllegalArgumentException (getExpression()
                     + '\n'
                     + e.getMessage()

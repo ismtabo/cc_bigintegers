@@ -18,7 +18,8 @@ public class NodeExpression {
 
     private static final String ERROR_UNRECOGNIZABLE_OP = "Operación irreconocible: ";
     private static final String ERROR_HIGH_EXPONENT = "Exponente demasiado grande: ";
-    private static final String ERROR_DIVIDE_BY_ZERO = "División entre 0";
+    private static final String ERROR_DIVIDE_BY_ZERO = "División entre 0: " ;
+    private static final String ERROR_NEGATIVE_EXPONENT = "Exponente negativo: ";
 
 
     private Operation op;
@@ -94,7 +95,7 @@ public class NodeExpression {
             try {
                 return getOperatedNodeRight().divide(getOperatedNodeLeft());
             } catch (ArithmeticException e){
-                throw new IllegalArgumentException(ERROR_DIVIDE_BY_ZERO);
+                throw new IllegalArgumentException(ERROR_DIVIDE_BY_ZERO + getOperatedNodeRight() +"/0");
             }
 
         } if(op == Operation.MODULE){
@@ -106,8 +107,11 @@ public class NodeExpression {
                  */
             try {
                 return getOperatedNodeRight().pow(Integer.valueOf(getOperatedNodeLeft().toString()));
-            } catch (ArithmeticException e){
+            } catch (NumberFormatException e) {
                 throw new IllegalArgumentException(ERROR_HIGH_EXPONENT + getOperatedNodeLeft().toString());
+            } catch (ArithmeticException e) {
+                throw new IllegalArgumentException(ERROR_NEGATIVE_EXPONENT +  getOperatedNodeLeft().toString());
+
             }
         }
         throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_OP + this);

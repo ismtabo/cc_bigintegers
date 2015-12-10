@@ -51,6 +51,15 @@ public class ProofClass {
 
         };
 
+        String expression1 [] = {
+                "1+1"
+                //,"(1+2)-(2*3)"
+                //,"((1+2)*3)-(2*3)"
+                ,"(34 + 25) * (3 - (2 ^234)) % 2^32 - 3 % 55"
+                , "((aed*4)*(45^54-hola)%(85^7))/34542+(AED*5)"
+
+        };
+
         //System.out.println(new ExpressionInfix(expression[5]).operate());
 
         for (String anExpression : expression) {

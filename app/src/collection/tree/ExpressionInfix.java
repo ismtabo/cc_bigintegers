@@ -4,7 +4,6 @@ import collection.tree.node.NodeExpression;
 import collection.tree.node.NodeNumber;
 import collection.tree.node.NodeVar;
 
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,12 +83,8 @@ public class ExpressionInfix extends ExpressionTree {
         if(getExpression().length() == 0) {
             throw new IllegalArgumentException(ERROR_EMPTY_EX);
         }
-        try {
-            return reduce(getExpression());
+        return reduce(getExpression());
 
-        } catch (IllegalArgumentException | IllegalStateException e){
-            throw new IllegalArgumentException( e.getMessage());
-        }
     }
 
 
@@ -105,10 +100,6 @@ public class ExpressionInfix extends ExpressionTree {
      * @return NodeExpression parent of subtree.
      */
     private static NodeExpression reduce(String expression) throws IllegalArgumentException {
-
-        if (!isBracketNeeded(expression)) {
-            expression = expression.substring(1, expression.length() - 1);
-        }
 
         if (isNumeric(expression)) {
             return new NodeNumber(expression);
@@ -127,7 +118,12 @@ public class ExpressionInfix extends ExpressionTree {
                         try {
                             return extract(OPS_4, expression);
                         } catch (IllegalArgumentException e3) {
-                            throw new IllegalArgumentException(e3.getMessage());
+                            if(expression.charAt(0)== '('
+                                    && expression.charAt(expression.length()-1)== ')') {
+                                return reduce(expression.substring(1, expression.length() - 1));
+                            }else{
+                                throw new IllegalArgumentException(e3.getMessage());
+                            }
                         }
                     }
                 }
@@ -165,6 +161,10 @@ public class ExpressionInfix extends ExpressionTree {
             String right = matcher.group(RIGHT_OPERAND);
 
 
+            if ((countChar(left, '(')+countChar(left, ')'))%2 !=0){
+                throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_EX + expression);
+            }
+
             if (left.length() != 0) {
 
                 if (isCorrectOP(left.charAt(left.length()-1)+"")){
@@ -196,6 +196,18 @@ public class ExpressionInfix extends ExpressionTree {
         } catch (IllegalStateException e){
             throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_EX + expression);
         }
+    }
+
+
+
+    private static int countChar(String string, char c){
+        int counter = 0;
+        for( int i=0; i<string.length(); i++ ) {
+            if( string.charAt(i) == c ) {
+                counter++;
+            }
+        }
+        return counter;
     }
 
 
@@ -237,36 +249,8 @@ public class ExpressionInfix extends ExpressionTree {
      * @return boolean value.
      */
     private static boolean isCorrectOP(String value) {
-        //System.out.println(value);
-        //System.out.println (value.matches(OPS_1)
-        //        || value.matches(OPS_3)
-        //        || value.matches(OPS_4));
         return (value.matches(OPS_1)
                 || value.matches(OPS_3)
                 || value.matches(OPS_4));
-    }
-
-
-    /**
-     * Function isBracketNeeded.
-     *
-     * It analizes if an expression contains unnecessary brackets.
-     *
-     * @param expression expression.
-     * @return boolean value.
-     */
-    private static boolean isBracketNeeded(String expression) {
-
-        if (expression.indexOf('(', 1) > expression.indexOf(')', 1)) {
-            return true;
-        }
-
-        if ((expression.length() != 0)
-                && (expression.charAt(0) == '(')
-                && (expression.charAt(expression.length() - 1) == ')')) {
-            return false;
-        }
-
-        return true;
     }
 }

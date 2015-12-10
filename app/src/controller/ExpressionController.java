@@ -71,14 +71,9 @@ public class ExpressionController {
      * @return BigInteger result
      * @throws IllegalStateException - In case {@expressiontree} can not be evaluated.
      */
-    public BigInteger result() throws IllegalStateException {
+    public BigInteger result() throws IllegalStateException, IllegalArgumentException {
         BigInteger result;
-        try {
-            result = expressionTree.operate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalStateException("Operación errónea");
-        }
+        result = expressionTree.operate();
         return result;
     }
 }

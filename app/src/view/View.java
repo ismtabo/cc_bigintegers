@@ -9,7 +9,6 @@ import collection.tree.Operation;
 import controller.Controller;
 
 import java.awt.Color;
-import javax.swing.border.Border;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
@@ -22,11 +21,6 @@ public class View extends javax.swing.JFrame {
     public final String OUTPREFIX = "OUT: ";
     private final String SPACE = " ";
     private final int ENTER_KEY = 10;
-
-    public final String MODINVERSE = ".modInverse( )";
-    public final String MODPOW = ".modPow( , )";
-    public final String ISMODPRIME = ".ismodPrime( )";
-    public final String NEXTPROBABLEPRIME = ".nextProbablePrime()";
 
     private Controller controller;
 
@@ -310,7 +304,7 @@ public class View extends javax.swing.JFrame {
      * <p/>
      * Set new {@code text} at input text field.
      *
-     * @param text
+     * @param text notation text
      */
     public void setJTextFieldInputText(String text) {
         jTextFieldExpression.setText(text);
@@ -350,7 +344,7 @@ public class View extends javax.swing.JFrame {
      * <p/>
      * Append new {@code text} at the end of the input text field.
      *
-     * @param text
+     * @param text result input text
      */
     public void appendJTextInputExpression(String text) {
         jTextFieldExpression.setText(getJTextFieldInputText() + text);
@@ -370,9 +364,9 @@ public class View extends javax.swing.JFrame {
      * <p/>
      * View show {
      *
-     * @error} at error's text field.
+     * {@code error} at error's text field.
      *
-     * @param error
+     * @param error throwed exception
      */
     public void showError(String error) {
         // TODO: Mostrar error en la vista
@@ -454,23 +448,19 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldExpressionKeyPressed
 
     private void jButtonModInverseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModInverseActionPerformed
-        // TODO add your handling code here:
-        appendJTextInputExpression(MODINVERSE);
+        appendJTextInputExpression(Operation.MODINVERSE.toString());
     }//GEN-LAST:event_jButtonModInverseActionPerformed
 
     private void jButtonIsModPrimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIsModPrimeActionPerformed
-        // TODO add your handling code here:
-        appendJTextInputExpression(MODPOW);
+        appendJTextInputExpression(Operation.ISPROBABLEPRIME.toString());
     }//GEN-LAST:event_jButtonIsModPrimeActionPerformed
 
     private void jButtonModPowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModPowActionPerformed
-        // TODO add your handling code here:
-        appendJTextInputExpression(ISMODPRIME);
+        appendJTextInputExpression(Operation.MODPOW.toString());
     }//GEN-LAST:event_jButtonModPowActionPerformed
 
     private void jButtonNextProbablePrimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextProbablePrimeActionPerformed
-        // TODO add your handling code here:
-        appendJTextInputExpression(NEXTPROBABLEPRIME);
+        appendJTextInputExpression(Operation.NEXTPROBABLEPRIME.toString());
     }//GEN-LAST:event_jButtonNextProbablePrimeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

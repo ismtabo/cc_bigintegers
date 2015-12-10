@@ -192,7 +192,7 @@ public class ExpressionInfix extends ExpressionTree {
             nodeRight = new NodeNumber();
         }
         try {
-            return new NodeExpression(nodeRight, Operation.isOP(matcher.group(OPERAND).charAt(0)), nodeLeft);
+            return new NodeExpression(nodeRight, Operation.isOP(matcher.group(OPERAND).charAt(0)+""), nodeLeft);
         } catch (IllegalStateException e){
             throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_EX + expression);
         }

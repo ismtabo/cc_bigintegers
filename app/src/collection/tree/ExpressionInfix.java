@@ -14,8 +14,18 @@ import java.util.regex.Pattern;
  */
 public class ExpressionInfix extends ExpressionTree {
 
-    private static final String OP_START = "(?<op>[";
+
+    private static final String ERROR_EMPTY_EX = "Expresión vacía";
+    private static final String ERROR_UNRECOGNIZABLE_EX = "Expresión Irreconocible: ";
+
+    private static final String LEFT_OPERAND = "left";
+    private static final String RIGHT_OPERAND = "right";
+    private static final String OPERAND = "op";
+
+
+    private static final String OP_START = "(?<" + OPERAND +">[";
     private static final String OP_END = "]{1})";
+
 
     private static final String OPS_1 = ""
             + OP_START
@@ -39,12 +49,16 @@ public class ExpressionInfix extends ExpressionTree {
             + Operation.POW.getRegex()
             + OP_END;
 
-    private static final String NUMBER = "(\\d*)";
 
-    private static final String VAR = "(\\w*)";
 
-    private static final String LEFT = "(?<left>([^\\(\\)]*)*?(\\(.*\\))*?([^\\(\\)]*?))";
-    private static final String RIGHT = "(?<right>([^\\(\\)]*)*?(\\(.*\\))*?([^\\(\\)]*?))";
+    private static final String NUMBER = "(\\d+)";
+    private static final String VAR = "(\\w+)";
+
+
+    private static final String LEFT = "(?<" + LEFT_OPERAND + ">([^\\(\\)]*)*?(\\(.*\\))*?([^\\(\\)]*?))";
+    private static final String RIGHT = "(?<" + RIGHT_OPERAND + ">([^\\(\\)]*)*?(\\(.*\\))*?([^\\(\\)]*?))";
+
+
 
     /**
      * Constructor of ExpressionTree.
@@ -52,8 +66,10 @@ public class ExpressionInfix extends ExpressionTree {
      * @param expression
      */
     public ExpressionInfix(String expression) {
-        super(expression.replaceAll("\\s+", ""));
+        super(expression.replaceAll("\\s+", "").toUpperCase());
     }
+
+
 
     /**
      * generateFromExpression() function.
@@ -64,8 +80,13 @@ public class ExpressionInfix extends ExpressionTree {
      */
     @Override
     protected NodeExpression generateFromExpression() {
+        if(getExpression().length() == 0) {
+            throw new IllegalArgumentException(ERROR_EMPTY_EX);
+        }
         return reduce(getExpression());
     }
+
+
 
     /**
      * reduce() function.
@@ -100,13 +121,15 @@ public class ExpressionInfix extends ExpressionTree {
                         try {
                             return extract(OPS_4, expression);
                         } catch (IllegalStateException e2) {
-                            return null;
+                            throw new IllegalArgumentException(ERROR_UNRECOGNIZABLE_EX + expression);
                         }
                     }
                 }
             }
         }
     }
+
+
 
     /**
      * extract() function.
@@ -132,8 +155,8 @@ public class ExpressionInfix extends ExpressionTree {
 
         if (matcher.matches()) {
 
-            String left = matcher.group("left");
-            String right = matcher.group("right");
+            String left = matcher.group(LEFT_OPERAND);
+            String right = matcher.group(RIGHT_OPERAND);
 
             if (left.length() != 0) {
                 nodeLeft = reduce(left);
@@ -152,8 +175,10 @@ public class ExpressionInfix extends ExpressionTree {
             nodeRight = new NodeNumber();
         }
 
-        return new NodeExpression(nodeRight, Operation.isOP(matcher.group("op").charAt(0)), nodeLeft);
+        return new NodeExpression(nodeRight, Operation.isOP(matcher.group(OPERAND).charAt(0)), nodeLeft);
     }
+
+
 
     /**
      * Function isNumeric.
@@ -167,6 +192,8 @@ public class ExpressionInfix extends ExpressionTree {
         return expression.matches(NUMBER);
     }
 
+
+
     /**
      * Function isVariable.
      *
@@ -178,6 +205,8 @@ public class ExpressionInfix extends ExpressionTree {
     private static boolean isVariable(String expression) {
         return expression.matches(VAR);
     }
+
+
 
     /**
      * Function isBracketNeeded.

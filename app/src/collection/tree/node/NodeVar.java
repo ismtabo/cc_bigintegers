@@ -13,6 +13,7 @@ import java.math.BigInteger;
  */
 public class NodeVar extends NodeExpression {
 
+    private static final String ERROR_UNDEFINED_VAR = "Variable no definida: ";
 
 
     String varName;
@@ -29,20 +30,22 @@ public class NodeVar extends NodeExpression {
     @Override
     public BigInteger operate() throws IllegalStateException{
         if (getVar(varName) == null){
-            throw new IllegalStateException("Variable '" + varName + "' no definida");
+            throw new IllegalStateException(ERROR_UNDEFINED_VAR + varName);
         }
         return getVar(varName).operate();
     }
 
-    private ExpressionTree getVar(String varName) {
 
+
+    private ExpressionTree getVar(String varName) {
         return ExpressionTree.getVar(varName);
     }
 
 
+
     @Override
     public String toString() {
-        if (getVar(varName)== null){
+        if (getVar(varName) == null){
             return varName;
         }
 

@@ -175,7 +175,7 @@ public class ExpressionInfix extends ExpressionTree {
             nodeRight = new NodeNumber();
         }
 
-        return new NodeExpression(nodeRight, Operation.isOP(matcher.group(OPERAND).charAt(0)), nodeLeft);
+        return new NodeExpression(nodeRight, Operation.isOP("" + matcher.group(OPERAND).charAt(0)), nodeLeft);
     }
 
 

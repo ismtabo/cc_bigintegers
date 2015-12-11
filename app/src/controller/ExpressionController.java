@@ -6,6 +6,7 @@ package controller;
 import collection.tree.ExpressionInfix;
 import collection.tree.ExpressionTree;
 import collection.tree.Operation;
+import collection.tree.node.NodeExpression;
 
 import java.math.BigInteger;
 import java.util.*;
@@ -154,7 +155,7 @@ public class ExpressionController {
                 x = toBigInteger(left);
                 right = matcher.group("right");
                 try {
-                    integer = Integer.getInteger(right);
+                    integer = Integer.parseInt(right);
                 } catch (Exception ex) {// Exception if n can't be cast as integer
                     ex.printStackTrace();
                     throw new IllegalArgumentException("Variable modular demasiado grande.");
@@ -175,13 +176,16 @@ public class ExpressionController {
     /*
      * String expression to BigInteger.
      *
-     * Check if expression is alphabet or not.
-     * If true, expression is alphabet, look for it at assigned vars map it ExpressionTree class,
-     *      and return value(throws Exception if not assigned var).
-     * Else, cast numeric expression as BigInteger.
+     * Evaluate expression as Expression tree. With two possible cases:
+     * - Variable saved at vars map
+     * - Numeric literal
+     *
+     * Both can be translate into Expression tree, and result can be obtained by operating them.
+     *
+     * return BigInteger result
      */
     private BigInteger toBigInteger(String expression) throws IllegalArgumentException {
-        BigInteger biginteger;
+        /*BigInteger biginteger;
         if (expression.matches(ALPHA)) {
             try {
                 biginteger = ExpressionTree.getVar(expression).operate();
@@ -190,7 +194,8 @@ public class ExpressionController {
             }
         } else {
             biginteger = new BigInteger(expression);
-        }
-        return biginteger;
+        }*/
+        ExpressionTree expressionTree = new ExpressionInfix(expression);
+        return expressionTree.operate();
     }
 }

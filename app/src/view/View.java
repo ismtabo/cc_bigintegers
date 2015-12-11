@@ -9,7 +9,12 @@ import collection.tree.Operation;
 import controller.Controller;
 
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.Border;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
@@ -31,7 +36,13 @@ public class View extends javax.swing.JFrame {
     public static final String ISMODPRIME = ".ismodPrime( )";
     public static final String NEXTPROBABLEPRIME = ".nextProbablePrime()";
 
+    private static final Highlighter.HighlightPainter cyanHighLight 
+            = new DefaultHighlighter.DefaultHighlightPainter(Color.CYAN);
+    private static final Highlighter.HighlightPainter redHighLight 
+            = new DefaultHighlighter.DefaultHighlightPainter(Color.RED);
+
     private Controller controller;
+    private TextLineNumber textLineNumber;
 
     /**
      * Creates new form View
@@ -40,6 +51,8 @@ public class View extends javax.swing.JFrame {
         initComponents();
         this.controller = new Controller(this);
         jTextAreaResult.setLineWrap(true);
+        textLineNumber = new TextLineNumber(jTextAreaResult);
+        jScrollPane2.setRowHeaderView( textLineNumber );
     }
 
     /**
@@ -335,8 +348,8 @@ public class View extends javax.swing.JFrame {
      * @param result - result of user expression
      */
     public void appendJTextAreaResult(String input, String result) {
-        appendJTextAreaResult(INPREFIX + input, Color.blue);
-        appendJTextAreaResult(OUTPREFIX + result, Color.black);
+        appendJTextAreaResult(INPREFIX  + input, Color.blue);
+        appendJTextAreaResult(OUTPREFIX  + result + "\n", Color.black);
     }
 
 
@@ -348,11 +361,25 @@ public class View extends javax.swing.JFrame {
     private void appendJTextAreaResult(String text, Color c) {
         SimpleAttributeSet aset = new SimpleAttributeSet();
         StyleConstants.setForeground(aset, c);
-
+        
+        
         int len = jTextAreaResult.getText().length();
         jTextAreaResult.setCaretPosition(len); // place caret at the end (with no selection)
         //jTextAreaResult.setCharacterAttributes(aset, false);
         jTextAreaResult.replaceSelection(text + "\n"); // there is no 
+        
+        if(c == Color.blue){
+            System.out.println(text);
+            int p0 = jTextAreaResult.getText().length() - text.length()-1;
+
+            int p1 = p0 + 3;
+        
+            try {
+                jTextAreaResult.getHighlighter().addHighlight(p0, p1, cyanHighLight);
+            } catch (BadLocationException ex) {
+                Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
     }
 
     /**

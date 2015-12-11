@@ -345,8 +345,8 @@ public class View extends javax.swing.JFrame {
      * @param result - result of user expression
      */
     public void appendJTextAreaResult(String input, String result) {
-        appendJTextAreaResult( "      "+ INPREFIX  + input, Color.blue);
-        appendJTextAreaResult( "    "+ OUTPREFIX  + result + "\n", Color.black);
+        appendJTextAreaResult( "       "+ INPREFIX  + input, Color.blue);
+        appendJTextAreaResult( "     "+ OUTPREFIX  + result + "\n", Color.black);
     }
 
 
@@ -366,11 +366,8 @@ public class View extends javax.swing.JFrame {
         jTextAreaResult.replaceSelection(text + "\n"); // there is no 
         
         if(c == Color.blue){
-            System.out.println(text);
             int p0 = jTextAreaResult.getText().length() - text.length()-1;
-
-            int p1 = p0 + text.lastIndexOf(':');
-        
+            int p1 = p0 + text.lastIndexOf(':')+1;
             try {
                 jTextAreaResult.getHighlighter().addHighlight(p0, p1, cyanHighLight);
             } catch (BadLocationException ex) {

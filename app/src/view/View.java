@@ -42,7 +42,6 @@ public class View extends javax.swing.JFrame {
             = new DefaultHighlighter.DefaultHighlightPainter(Color.RED);
 
     private Controller controller;
-    private TextLineNumber textLineNumber;
 
     /**
      * Creates new form View
@@ -51,8 +50,6 @@ public class View extends javax.swing.JFrame {
         initComponents();
         this.controller = new Controller(this);
         jTextAreaResult.setLineWrap(true);
-        textLineNumber = new TextLineNumber(jTextAreaResult);
-        jScrollPane2.setRowHeaderView( textLineNumber );
     }
 
     /**
@@ -348,8 +345,8 @@ public class View extends javax.swing.JFrame {
      * @param result - result of user expression
      */
     public void appendJTextAreaResult(String input, String result) {
-        appendJTextAreaResult(INPREFIX  + input, Color.blue);
-        appendJTextAreaResult(OUTPREFIX  + result + "\n", Color.black);
+        appendJTextAreaResult( "      "+ INPREFIX  + input, Color.blue);
+        appendJTextAreaResult( "    "+ OUTPREFIX  + result + "\n", Color.black);
     }
 
 
@@ -372,7 +369,7 @@ public class View extends javax.swing.JFrame {
             System.out.println(text);
             int p0 = jTextAreaResult.getText().length() - text.length()-1;
 
-            int p1 = p0 + 3;
+            int p1 = p0 + text.lastIndexOf(':');
         
             try {
                 jTextAreaResult.getHighlighter().addHighlight(p0, p1, cyanHighLight);

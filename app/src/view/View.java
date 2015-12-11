@@ -38,8 +38,6 @@ public class View extends javax.swing.JFrame {
 
     private static final Highlighter.HighlightPainter cyanHighLight 
             = new DefaultHighlighter.DefaultHighlightPainter(Color.CYAN);
-    private static final Highlighter.HighlightPainter redHighLight 
-            = new DefaultHighlighter.DefaultHighlightPainter(Color.RED);
 
     private Controller controller;
 
@@ -345,7 +343,7 @@ public class View extends javax.swing.JFrame {
      * @param result - result of user expression
      */
     public void appendJTextAreaResult(String input, String result) {
-        appendJTextAreaResult( "       "+ INPREFIX  + input, Color.blue);
+        appendJTextAreaResult( "        "+ INPREFIX  + input, Color.blue);
         appendJTextAreaResult( "     "+ OUTPREFIX  + result + "\n", Color.black);
     }
 
@@ -366,8 +364,8 @@ public class View extends javax.swing.JFrame {
         jTextAreaResult.replaceSelection(text + "\n"); // there is no 
         
         if(c == Color.blue){
-            int p0 = jTextAreaResult.getText().length() - text.length()-1;
-            int p1 = p0 + text.lastIndexOf(':')+1;
+            int p0 = jTextAreaResult.getText().length() - text.length()+4;
+            int p1 = jTextAreaResult.getText().length() -  text.length() +  text.lastIndexOf(':');
             try {
                 jTextAreaResult.getHighlighter().addHighlight(p0, p1, cyanHighLight);
             } catch (BadLocationException ex) {

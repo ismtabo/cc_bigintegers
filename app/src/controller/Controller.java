@@ -5,7 +5,11 @@
  */
 package controller;
 
+import collection.tree.ExpressionInfix;
+import collection.tree.ExpressionTree;
+import collection.tree.Operation;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import view.View;
 
 /**
@@ -14,101 +18,54 @@ import view.View;
  */
 public class Controller {
 
-
-    private static final String EQUAL = "=";
-    private static final String ADD = "+";
-    private static final String SUBTRACT = "-";
-    private static final String MULTIPLY = "x";
-    private static final String DIVIDE = "/";
-    private static final String MOD = "%";
-    private static final String POW = "^";
-    private static final String OPEN_BRACKET = "(";
-    private static final String CLOSE_BRACKET = ")";
-
     private View view;
+    
+    private ArrayList<String> cache = new ArrayList<>();
+    private int indexCache = 0;
 
-    private BigInteger cacheNumber;
+    private ExpressionController expressionController;
 
 
-    public Controller(View view){
+    public Controller(View view) {
         this.view = view;
-        reset();
+        this.expressionController = new ExpressionController();
     }
 
-
-    public void setCacheNumber(BigInteger number){
-        cacheNumber = number;
-    }
-
-
-
-    public BigInteger getCacheNumber(){
-        return cacheNumber;
-    }
-
-
-    public void addOp(){
-        //setCacheNumber(cacheNumber.add(getCacheNumberOp()));
-        System.out.println(cacheNumber);
-    }
-
-    private void multiplyOp() {
-        //setCacheNumber(cacheNumber.multiply(getCacheNumberOp()));
-        System.out.println(cacheNumber);
-    }
-
-    public void add(){
-        view.appendJTextFieldInputText(ADD);
-    }
-
-    public void subtract(){
-        view.appendJTextFieldInputText(SUBTRACT);
-
-    }
-
-    public void multiply() {
-        view.appendJTextFieldInputText(MULTIPLY);
-    }
-
-    public void divide() {
-        view.appendJTextFieldInputText(DIVIDE);
-    }
-
-    public void mod() {
-        view.appendJTextFieldInputText(MOD);
-    }
-
-    public void pow() {
-        view.appendJTextFieldInputText(POW);
-    }
-
-    public void reset(){
-        setCacheNumber(BigInteger.ZERO);
-        update();
-    }
-
-
-    public void update(){
-        view.setJTextFieldInputText(getCacheNumber().toString());
-    }
-
-
-    public void equal() {
-
-    }
-
-    public void clean() {
-        if (view.getJTextFieldInputText().equals("0")){
+    public void evaluate() {
+        view.clearErrors();
+        String expression = view.getJTextFieldInputText();
+        String result;
+        ExpressionTree expressiontree;
+        try {
+            expressionController.readExpression(expression);
+            result = expressionController.result();
+            view.appendJTextAreaResult(expression, result);
             view.setJTextFieldInputText("");
+            
+            cache.add(expression);
+            indexCache = cache.size();
+            
+        } catch (Exception e) {
+            view.showError(e.getMessage());
+            //e.printStackTrace();
         }
     }
 
-    public void openBracket() {
-        view.appendJTextFieldInputText(OPEN_BRACKET);
-        closeBracket();
+    
+    public void nextCache() {
+        if (indexCache > 0 ){
+            indexCache--;
+            view.setJTextFieldInputText(cache.get(indexCache));
+        }
+    }
+        
+    public void previousCache() {
+        if (indexCache+1 < cache.size()){
+            indexCache++;
+            view.setJTextFieldInputText(cache.get(indexCache));
+        }
+
     }
 
-    public void closeBracket() {
-        view.appendJTextFieldInputText(CLOSE_BRACKET);
-    }
+
 }

@@ -12,11 +12,14 @@
 hs_err_pid*
 
 ### NetBeans ###
-app/nbproject/private/
+app/nbproject/private
 app/build/
 app/nbbuild/
 app/dist/
 app/nbdist/
 app/nbactions.xml
-app/nb-configuration.xml
 app/.nb-gradle/
+
+
+### Intellij IDEA ###
+.idea

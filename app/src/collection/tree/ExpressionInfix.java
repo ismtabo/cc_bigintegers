@@ -146,7 +146,7 @@ public class ExpressionInfix extends ExpressionTree {
      *
      * @return NodeExpression parent of subtree.
      */
-    private static NodeExpression extract(String op, String expression) throws IllegalArgumentException {
+    private static NodeExpression extract(String op, String expression) {
         NodeExpression nodeLeft;
         NodeExpression nodeRight;
 

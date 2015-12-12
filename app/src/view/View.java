@@ -11,12 +11,8 @@ import controller.Controller;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
-import javax.swing.text.Highlighter;
-import javax.swing.text.Highlighter.HighlightPainter;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
@@ -327,7 +323,11 @@ public class View extends javax.swing.JFrame {
      * <p/>
      * Set new {@code text} at input text field.
      *
+<<<<<<< HEAD
      * @param text  notation text
+=======
+     * @param text notation text
+>>>>>>> dev
      */
     public void setJTextFieldInputText(String text) {
         jTextFieldExpression.setText(text);

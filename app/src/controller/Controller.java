@@ -34,13 +34,11 @@ public class Controller {
     public void evaluate() {
         view.clearErrors();
         String expression = view.getJTextFieldInputText();
-        String result = "--no result--";
-        BigInteger cachedresult;
+        String result;
         ExpressionTree expressiontree;
         try {
             expressionController.readExpression(expression);
-            cachedresult = expressionController.result();
-            result = cachedresult.toString();
+            result = expressionController.result();
             view.appendJTextAreaResult(expression, result);
             view.setJTextFieldInputText("");
             

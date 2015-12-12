@@ -28,7 +28,7 @@ public class ExpressionController {
 
     private static final String RIGHT = "(?<right>([^\\(\\)]*)*?(\\(.*\\))*?([^\\(\\)]*?))";
 
-    private static final String ASSIGN = ALPHA + "." + RESULT.getRegex() + "." + RIGHT;
+    private static final String ASSIGN = ALPHA + RESULT.getRegex() + RIGHT;
 
     private static final List<Operation> complex_operations_regexp =
             Arrays.asList(MODINVERSE, MODPOW,
@@ -55,7 +55,8 @@ public class ExpressionController {
      * @param expression - user input expression
      */
     public void readExpression(String expression) {
-        expression.replaceAll("\\s+", "");
+        expression = expression.replaceAll("\\s+", "");
+        System.out.println(expression);
 
         expressionTree = null;
         cached_result = "";

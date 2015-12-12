@@ -47,7 +47,7 @@ public class Controller {
             
         } catch (Exception e) {
             view.showError(e.getMessage());
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 

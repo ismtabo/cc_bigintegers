@@ -10,9 +10,7 @@ import java.util.Stack;
 /**
  * Created by garciparedes on 24/11/15.
  */
-public class ExpressionPostFix  extends ExpressionTree{
-
-
+public class ExpressionPostFix extends ExpressionTree {
 
     /**
      * Constructor of ExpressionTree.
@@ -22,8 +20,6 @@ public class ExpressionPostFix  extends ExpressionTree{
     public ExpressionPostFix(String expression) {
         super(expression);
     }
-
-
 
     /**
      * generateFromPostfix function.
@@ -42,18 +38,18 @@ public class ExpressionPostFix  extends ExpressionTree{
         NodeExpression nodeExpression2;
         char c;
 
-        while(i < len){
+        while (i < len) {
             c = getExpression().charAt(i);
 
-            if((op = Operation.isOP(c+"")) !=  null){
-                try{
+            if ((op = Operation.isOP(c + "")) != null) {
+                try {
                     nodeExpression1 = nodeStack.pop();
                     try {
                         nodeExpression2 = nodeStack.pop();
-                    } catch (EmptyStackException e){
+                    } catch (EmptyStackException e) {
                         nodeExpression2 = new NodeNumber();
                     }
-                }catch (EmptyStackException e){
+                } catch (EmptyStackException e) {
                     nodeExpression1 = new NodeNumber();
                     nodeExpression2 = new NodeNumber();
                 }
@@ -89,9 +85,6 @@ public class ExpressionPostFix  extends ExpressionTree{
         return nodeStack.pop();
     }
 
-
-
-
     /**
      * inOrder method.
      *
@@ -109,8 +102,6 @@ public class ExpressionPostFix  extends ExpressionTree{
         }
     }
 
-
-
     /**
      * Returns the infix expression
      *
@@ -122,12 +113,10 @@ public class ExpressionPostFix  extends ExpressionTree{
             inOrder(getTop(), infix);
             return infix.toString();
 
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             return e.getMessage();
         }
     }
-
-
 
     @Override
     public String toString() {

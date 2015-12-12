@@ -326,8 +326,6 @@ public class View extends javax.swing.JFrame {
 <<<<<<< HEAD
      * @param text  notation text
 =======
-     * @param text notation text
->>>>>>> dev
      */
     public void setJTextFieldInputText(String text) {
         jTextFieldExpression.setText(text);

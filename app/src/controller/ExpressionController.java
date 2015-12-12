@@ -1,4 +1,5 @@
 package controller;
+
 /**
  * Created by ismtabo, in cc_bigintegers.
  */
@@ -20,7 +21,8 @@ import static collection.tree.Operation.MODPOW;
 /**
  * Expressions controller.
  * <p/>
- * This controller filter the users' expression making differences between operations and assignments.
+ * This controller filter the users' expression making differences between
+ * operations and assignments.
  */
 public class ExpressionController {
 
@@ -30,8 +32,8 @@ public class ExpressionController {
 
     private static final String ASSIGN = ALPHA + RESULT.getRegex() + RIGHT;
 
-    private static final List<Operation> complex_operations_regexp =
-            Arrays.asList(MODINVERSE, MODPOW,
+    private static final List<Operation> complex_operations_regexp
+            = Arrays.asList(MODINVERSE, MODPOW,
                     ISPROBABLEPRIME, NEXTPROBABLEPRIME);
 
     private ExpressionTree expressionTree;
@@ -48,9 +50,10 @@ public class ExpressionController {
     /**
      * readExression() function.
      * <p/>
-     * Controller read {@code expression} and filter assignments expressions from operations.
-     * If {@code expression} is an assignment {@code ExpressionController}
-     * will record a variable at {@link ExpressionTree#vars}.
+     * Controller read {@code expression} and filter assignments expressions
+     * from operations. If {@code expression} is an assignment
+     * {@code ExpressionController} will record a variable at
+     * {@link ExpressionTree#vars}.
      *
      * @param expression - user input expression
      */
@@ -73,8 +76,9 @@ public class ExpressionController {
 
         } else {
             cached_result = testNSetComplex(expression);
-            if (cached_result == null)
+            if (cached_result == null) {
                 expressionTree = new ExpressionInfix(expression);
+            }
         }
     }
 
@@ -84,15 +88,17 @@ public class ExpressionController {
      * Expression controller evaluates cached ExpressionTree.
      *
      * @return BigInteger result
-     * @throws IllegalStateException - In case {@expressionTree} can not be evaluated.
+     * @throws IllegalStateException - In case {
+     * @expressionTree} can not be evaluated.
      */
     public String result() throws IllegalStateException, IllegalArgumentException {
         if (cached_result == null) {
             String result;
             result = expressionTree.operate().toString();
             return result;
-        } else
+        } else {
             return cached_result;
+        }
     }
 
     /*
@@ -119,9 +125,9 @@ public class ExpressionController {
             }
         }
 
-
-        if (complex_operation == null)
+        if (complex_operation == null) {
             return null;
+        }
 
         // String expression operands
         String left;
@@ -185,16 +191,6 @@ public class ExpressionController {
      * return BigInteger result
      */
     private BigInteger toBigInteger(String expression) throws IllegalArgumentException {
-        /*BigInteger biginteger;
-        if (expression.matches(ALPHA)) {
-            try {
-                biginteger = ExpressionTree.getVar(expression).operate();
-            } catch (Exception ex) {
-                throw new IllegalArgumentException("Variable no definida");
-            }
-        } else {
-            biginteger = new BigInteger(expression);
-        }*/
         ExpressionTree expressionTree = new ExpressionInfix(expression);
         return expressionTree.operate();
     }

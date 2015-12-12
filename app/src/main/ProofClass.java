@@ -14,6 +14,14 @@ import java.util.HashMap;
  */
 public class ProofClass {
 
+    /**
+     * ProofClass main function.
+     * 
+     * Proof class run local test about program software. 
+     * Testing {@link collection.tree} classes are running in the proper way.
+     * 
+     * @param args internal system arguments
+     */
     public static void main(String[] args) {
 
 

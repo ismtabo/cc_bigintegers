@@ -14,7 +14,9 @@ import java.util.logging.Logger;
 import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 import javax.swing.text.Highlighter;
+import javax.swing.text.Highlighter.HighlightPainter;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
@@ -23,8 +25,8 @@ import javax.swing.text.StyleConstants;
  */
 public class View extends javax.swing.JFrame {
 
-    public static final String INPREFIX = "IN: ";
-    public static final String OUTPREFIX = "OUT: ";
+    public static final String INPREFIX  = "        " + "IN: ";
+    public static final String OUTPREFIX = "     " + "OUT: ";
     private static final String SPACE = " ";
     
     private static final int ENTER_KEY = 10;
@@ -36,8 +38,6 @@ public class View extends javax.swing.JFrame {
     public static final String ISMODPRIME = ".ismodPrime( )";
     public static final String NEXTPROBABLEPRIME = ".nextProbablePrime()";
 
-    private static final Highlighter.HighlightPainter cyanHighLight 
-            = new DefaultHighlighter.DefaultHighlightPainter(Color.CYAN);
 
     private Controller controller;
 
@@ -78,7 +78,7 @@ public class View extends javax.swing.JFrame {
         jTextFieldExpression = new javax.swing.JTextField();
         jButtonExecute = new javax.swing.JButton();
         jLabelError = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaResult = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -278,7 +278,7 @@ public class View extends javax.swing.JFrame {
         jTextAreaResult.setColumns(20);
         jTextAreaResult.setRows(5);
         jTextAreaResult.setFocusable(false);
-        jScrollPane2.setViewportView(jTextAreaResult);
+        jScrollPane1.setViewportView(jTextAreaResult);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -287,7 +287,7 @@ public class View extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 698, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -305,7 +305,7 @@ public class View extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -327,7 +327,7 @@ public class View extends javax.swing.JFrame {
      * <p/>
      * Set new {@code text} at input text field.
      *
-     * @param text
+     * @param text  notation text
      */
     public void setJTextFieldInputText(String text) {
         jTextFieldExpression.setText(text);
@@ -343,8 +343,8 @@ public class View extends javax.swing.JFrame {
      * @param result - result of user expression
      */
     public void appendJTextAreaResult(String input, String result) {
-        appendJTextAreaResult( "        "+ INPREFIX  + input, Color.blue);
-        appendJTextAreaResult( "     "+ OUTPREFIX  + result + "\n", Color.black);
+        appendJTextAreaResult(INPREFIX  + input, Color.CYAN);
+        appendJTextAreaResult(OUTPREFIX  + result + "\n", Color.WHITE);
     }
 
 
@@ -360,18 +360,16 @@ public class View extends javax.swing.JFrame {
         
         int len = jTextAreaResult.getText().length();
         jTextAreaResult.setCaretPosition(len); // place caret at the end (with no selection)
-        //jTextAreaResult.setCharacterAttributes(aset, false);
         jTextAreaResult.replaceSelection(text + "\n"); // there is no 
         
-        if(c == Color.blue){
-            int p0 = jTextAreaResult.getText().length() - text.length()+4;
-            int p1 = jTextAreaResult.getText().length() -  text.length() +  text.lastIndexOf(':');
-            try {
-                jTextAreaResult.getHighlighter().addHighlight(p0, p1, cyanHighLight);
-            } catch (BadLocationException ex) {
-                Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } 
+        int p0 = jTextAreaResult.getText().length() - text.length()+4;
+        int p1 = jTextAreaResult.getText().length() -  text.length() +  text.lastIndexOf(':');
+        try {                
+            jTextAreaResult.getHighlighter()
+                    .addHighlight(p0, p1, new DefaultHighlightPainter(c));
+        } catch (BadLocationException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -379,7 +377,7 @@ public class View extends javax.swing.JFrame {
      * <p/>
      * Append new {@code text} at the end of the input text field.
      *
-     * @param text
+     * @param text result input text
      */
     public void appendJTextInputExpression(String text) {
         jTextFieldExpression.setText(getJTextFieldInputText() + text);
@@ -399,9 +397,9 @@ public class View extends javax.swing.JFrame {
      * <p/>
      * View show {
      *
-     * @error} at error's text field.
+     * {@code error} at error's text field.
      *
-     * @param error
+     * @param error throwed exception
      */
     public void showError(String error) {
         // TODO: Mostrar error en la vista
@@ -491,23 +489,19 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldExpressionKeyPressed
 
     private void jButtonModInverseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModInverseActionPerformed
-        // TODO add your handling code here:
-        appendJTextInputExpression(MODINVERSE);
+        appendJTextInputExpression(Operation.MODINVERSE.toString());
     }//GEN-LAST:event_jButtonModInverseActionPerformed
 
     private void jButtonIsModPrimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIsModPrimeActionPerformed
-        // TODO add your handling code here:
-        appendJTextInputExpression(MODPOW);
+        appendJTextInputExpression(Operation.ISPROBABLEPRIME.toString());
     }//GEN-LAST:event_jButtonIsModPrimeActionPerformed
 
     private void jButtonModPowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModPowActionPerformed
-        // TODO add your handling code here:
-        appendJTextInputExpression(ISMODPRIME);
+        appendJTextInputExpression(Operation.MODPOW.toString());
     }//GEN-LAST:event_jButtonModPowActionPerformed
 
     private void jButtonNextProbablePrimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextProbablePrimeActionPerformed
-        // TODO add your handling code here:
-        appendJTextInputExpression(NEXTPROBABLEPRIME);
+        appendJTextInputExpression(Operation.NEXTPROBABLEPRIME.toString());
     }//GEN-LAST:event_jButtonNextProbablePrimeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -528,7 +522,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSubtract;
     private javax.swing.JLabel jLabelError;
     private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaResult;
     private javax.swing.JTextField jTextFieldExpression;
     // End of variables declaration//GEN-END:variables

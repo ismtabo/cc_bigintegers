@@ -47,5 +47,7 @@ Dominar el uso de la precisión aritmética arbitraria en java.
 
 Autores
 ----
+
 Sergio García: [garciparedes](https://github.com/garciparedes)
+
 Ismael Taboada: [ismtabo](https://github.com/ismtabo)

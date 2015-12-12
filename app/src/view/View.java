@@ -9,6 +9,10 @@ import collection.tree.Operation;
 import controller.Controller;
 
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
@@ -17,10 +21,19 @@ import javax.swing.text.StyleConstants;
  */
 public class View extends javax.swing.JFrame {
 
-    public final String INPREFIX = "IN: ";
-    public final String OUTPREFIX = "OUT: ";
-    private final String SPACE = " ";
-    private final int ENTER_KEY = 10;
+    public static final String INPREFIX  = "        " + "IN: ";
+    public static final String OUTPREFIX = "     " + "OUT: ";
+    private static final String SPACE = " ";
+    
+    private static final int ENTER_KEY = 10;
+    private static final int UP_KEY = 38;
+    private static final int DOWN_KEY = 40;
+
+    public static final String MODINVERSE = ".modInverse( )";
+    public static final String MODPOW = ".modPow( , )";
+    public static final String ISMODPRIME = ".ismodPrime( )";
+    public static final String NEXTPROBABLEPRIME = ".nextProbablePrime()";
+
 
     private Controller controller;
 
@@ -30,6 +43,7 @@ public class View extends javax.swing.JFrame {
     public View() {
         initComponents();
         this.controller = new Controller(this);
+        jTextAreaResult.setLineWrap(true);
     }
 
     /**
@@ -59,9 +73,9 @@ public class View extends javax.swing.JFrame {
         jButtonModInverse = new javax.swing.JButton();
         jTextFieldExpression = new javax.swing.JTextField();
         jButtonExecute = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaResult = new javax.swing.JTextPane();
         jLabelError = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextAreaResult = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -253,10 +267,14 @@ public class View extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jTextAreaResult);
-
         jLabelError.setForeground(new java.awt.Color(255, 0, 0));
         jLabelError.setText("   ");
+
+        jTextAreaResult.setEditable(false);
+        jTextAreaResult.setColumns(20);
+        jTextAreaResult.setRows(5);
+        jTextAreaResult.setFocusable(false);
+        jScrollPane1.setViewportView(jTextAreaResult);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -266,28 +284,29 @@ public class View extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 698, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLayeredPane1)
-                        .addGap(1, 1, 1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonExecute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelError)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jTextFieldExpression)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonExecute, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(1, 1, 1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonExecute)
-                    .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldExpression, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonExecute))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelError)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -304,11 +323,16 @@ public class View extends javax.swing.JFrame {
      * <p/>
      * Set new {@code text} at input text field.
      *
+<<<<<<< HEAD
+     * @param text  notation text
+=======
      * @param text notation text
+>>>>>>> dev
      */
     public void setJTextFieldInputText(String text) {
         jTextFieldExpression.setText(text);
     }
+    
 
     /**
      * appendJTextAreaRestult() function.
@@ -319,8 +343,8 @@ public class View extends javax.swing.JFrame {
      * @param result - result of user expression
      */
     public void appendJTextAreaResult(String input, String result) {
-        appendJTextAreaResult(INPREFIX + input, Color.blue);
-        appendJTextAreaResult(OUTPREFIX + result, Color.black);
+        appendJTextAreaResult(INPREFIX  + input, Color.CYAN);
+        appendJTextAreaResult(OUTPREFIX  + result + "\n", Color.WHITE);
     }
 
 
@@ -332,11 +356,20 @@ public class View extends javax.swing.JFrame {
     private void appendJTextAreaResult(String text, Color c) {
         SimpleAttributeSet aset = new SimpleAttributeSet();
         StyleConstants.setForeground(aset, c);
-
+        
+        
         int len = jTextAreaResult.getText().length();
         jTextAreaResult.setCaretPosition(len); // place caret at the end (with no selection)
-        jTextAreaResult.setCharacterAttributes(aset, false);
         jTextAreaResult.replaceSelection(text + "\n"); // there is no 
+        
+        int p0 = jTextAreaResult.getText().length() - text.length()+4;
+        int p1 = jTextAreaResult.getText().length() -  text.length() +  text.lastIndexOf(':');
+        try {                
+            jTextAreaResult.getHighlighter()
+                    .addHighlight(p0, p1, new DefaultHighlightPainter(c));
+        } catch (BadLocationException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -442,8 +475,16 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExecuteActionPerformed
 
     private void jTextFieldExpressionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldExpressionKeyPressed
-        if (evt.getKeyCode() == ENTER_KEY) {
-            controller.evaluate();
+        switch(evt.getKeyCode()){
+            case ENTER_KEY:
+                controller.evaluate();
+                break;
+            case UP_KEY:
+                controller.nextCache();
+                break;    
+            case DOWN_KEY:
+                controller.previousCache();
+                break;
         }
     }//GEN-LAST:event_jTextFieldExpressionKeyPressed
 
@@ -482,7 +523,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelError;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextAreaResult;
+    private javax.swing.JTextArea jTextAreaResult;
     private javax.swing.JTextField jTextFieldExpression;
     // End of variables declaration//GEN-END:variables
 

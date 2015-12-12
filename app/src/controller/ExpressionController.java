@@ -6,7 +6,6 @@ package controller;
 import collection.tree.ExpressionInfix;
 import collection.tree.ExpressionTree;
 import collection.tree.Operation;
-import collection.tree.node.NodeExpression;
 
 import java.math.BigInteger;
 import java.util.*;

@@ -19,18 +19,30 @@ import view.View;
 public class Controller {
 
     private View view;
-    
+
     private ArrayList<String> cache = new ArrayList<>();
     private int indexCache = 0;
 
     private ExpressionController expressionController;
 
-
+    /**
+     * Initialize instance of class given a {@link View}.
+     *
+     * @param view View of application
+     */
     public Controller(View view) {
         this.view = view;
         this.expressionController = new ExpressionController();
     }
 
+    /**
+     * Evaluate function.
+     *
+     * Evaluate user expression of view with {@link ExpressionController},
+     * giving back the result, and show it at program user interface. In case it
+     * ocurrs an error during evaluation, controller makes the view to show
+     * errors.
+     */
     public void evaluate() {
         view.clearErrors();
         String expression = view.getJTextFieldInputText();
@@ -41,31 +53,39 @@ public class Controller {
             result = expressionController.result();
             view.appendJTextAreaResult(expression, result);
             view.setJTextFieldInputText("");
-            
+
             cache.add(expression);
             indexCache = cache.size();
-            
+
         } catch (Exception e) {
             view.showError(e.getMessage());
             //e.printStackTrace();
         }
     }
 
-    
+    /**
+     * nextCache() function.
+     * 
+     * Change cache index to next cached result.
+     */
     public void nextCache() {
-        if (indexCache > 0 ){
+        if (indexCache > 0) {
             indexCache--;
             view.setJTextFieldInputText(cache.get(indexCache));
         }
     }
-        
+
+    /**
+     * previousCache() function.
+     * 
+     * Change cache index to previous cached result.
+     */
     public void previousCache() {
-        if (indexCache+1 < cache.size()){
+        if (indexCache + 1 < cache.size()) {
             indexCache++;
             view.setJTextFieldInputText(cache.get(indexCache));
         }
 
     }
-
 
 }

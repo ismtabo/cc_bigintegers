@@ -9,7 +9,7 @@ import collection.tree.ExpressionTree;
 import java.math.BigInteger;
 
 /**
- * Class that represents numbers in the tree.
+ * Class that represents literal variables in the tree.
  */
 public class NodeVar extends NodeExpression {
 
@@ -19,14 +19,25 @@ public class NodeVar extends NodeExpression {
     String varName;
 
 
-
+    /**
+     * Initialize instance of class.
+     * 
+     * @param value name of variable
+     */
     public NodeVar(String value){
         super(null, null, null);
         this.varName = value.toUpperCase();
     }
 
 
-
+    /**
+     * Evaluate node value.
+     * 
+     * Evalutate node expression giving back the proper value.
+     * 
+     * @return variable value.
+     * @throws IllegalArgumentException when variable does not exist in local storage {@link ExpressionTree#vars}.
+     */
     @Override
     public BigInteger operate() throws IllegalArgumentException {
         if (getVar(varName) == null){
@@ -42,7 +53,9 @@ public class NodeVar extends NodeExpression {
     }
 
 
-
+    /**
+     * @return {@link String} expression of node.
+     */
     @Override
     public String toString() {
         if (getVar(varName) == null){

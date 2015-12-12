@@ -7,20 +7,69 @@ package collection.tree;
  */
 public enum Operation {
 
+    /**
+     * Adding operator.
+     */
     ADD("+", true),
+    /**
+     * Substract operator.
+     */
     SUBTRACT("-", true),
+    /**
+     * Multipy operator.
+     */
     MULTIPLY("*", true),
+    /**
+     * Division operator.
+     */
     DIVIDE("/", true),
+    /**
+     * Module operator.
+     */
     MODULE("%", true),
+    /**
+     * Power operator.
+     */
     POW("^", true),
+    /**
+     * Assignment/result operator.
+     */
     RESULT("=", true),
+    /**
+     * Left bracket.
+     */
     LBRACKET("(", true),
+    /**
+     * Right bracket.
+     */
     RBRACKET(")", true),
+    /**
+     * Mod inverse operation.
+     *
+     * Infix operation xfy, in which given x we lookfor its invers number at
+     * corpus (y)Z.
+     */
     MODINVERSE(".modInverse( )", false),
+    /**
+     * Mod pow operation.
+     *
+     * Infix operation xf(y,n), in which given x and y we want x^y value at
+     * corpus (y)Z.
+     */
     MODPOW(".modPow( , )", false),
+    /**
+     * Is Probable Prime.
+     *
+     * Infix operation xfy, in which given x we want to know if it is prime at
+     * corpus (y)Z.
+     */
     ISPROBABLEPRIME(".ismodPrime( )", false),
+    /**
+     * Next Probable Prime.
+     *
+     * Given x, we want to know the next integer number which is probably prime.
+     */
     NEXTPROBABLEPRIME(".nextProbablePrime()", false);
-
 
     private final String symbol;
     private final boolean basic;
@@ -28,7 +77,9 @@ public enum Operation {
     /**
      * Constructor of Operation.
      *
-     * @param symbol char who represents symbol.
+     * @param symbol {@link String} expression which represents symbol.
+     * @param basic boolean which represent if operation is basic(common
+     * operator) or complex.
      */
     Operation(String symbol, boolean basic) {
         this.symbol = symbol;
@@ -62,8 +113,9 @@ public enum Operation {
      * @return symbol regex expression to find it char.
      */
     public String getRegex() {
-        if (this.basic)
+        if (this.basic) {
             return "\\" + getSymbol();
+        }
         String regexp = "";
         switch (this) {
             case MODINVERSE:
